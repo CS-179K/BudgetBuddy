@@ -1,4 +1,13 @@
 # testx
 template
 # Team Members
-Art Guinto/aguin005
+- Srija Bhashyam
+- Art Guinto / aguin005
+- Tristan Cai
+- Junyan Hou
+# Major Features
+TODO
+# Major Techniques
+TODO
+# Architecture
+TODO
