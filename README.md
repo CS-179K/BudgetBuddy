@@ -128,11 +128,37 @@ Development Tools.
 - If possible we use CircleCI to build the CI/CD pipeline to integrate our project from dev, test, staging and prod environment. 
 - Depending on self preference we use IDEA or VS-Code. Npm will be used to build and pack the project.
 
-Frontend:
+Frontend
 - HTML provides the skeletal structure, while CSS offers the visual styles and layout.
 - React: This JavaScript library will be employed for building user interfaces, specifically for handling dynamic user interactions and rendering complex UI elements. React's component-based architecture allows for reusable UI components, enhancing maintainability and scalability.
 
-Backend:
+Backend
 - Node.js: The backend will be powered by Node.js, an efficient and scalable platform for building server-side applications. Node.js will handle server-side logic, business operations, and database interactions. The asynchronous nature of Node.js will support high throughput and fast response times.
-- Forms will be used to collect user data for debt management and recurring transactions. This data will be stored securely in our MongoDB database. MySQL is also considered but it depends on our practise. 
+- Forms will be used to collect user data for debt management and recurring transactions. This data will be stored securely in our MongoDB database. MySQL is also considered but it depends on our practise.
+
+## Techniques
+Tools.
+- IDEA or VS-Code
+- GitHub.
+- Postman.
+- npm
+
+Frontend.
+- HTML.
+- CSS.
+- React
+
+Backend.
+- Node.js.
+- Express.js.
+
+Database.
+- MongoDB.
+- MySQL(elective)
+
+
+
+## Initial Burndown Chart
+
+
 
