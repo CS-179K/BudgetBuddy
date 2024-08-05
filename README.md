@@ -136,6 +136,8 @@ Backend
 - Node.js: The backend will be powered by Node.js, an efficient and scalable platform for building server-side applications. Node.js will handle server-side logic, business operations, and database interactions. The asynchronous nature of Node.js will support high throughput and fast response times.
 - Forms will be used to collect user data for debt management and recurring transactions. This data will be stored securely in our MongoDB database. MySQL is also considered but it depends on our practise.
 
+![image](https://github.com/user-attachments/assets/83f2e669-8640-4892-8956-0c8cb15d84e0)
+
 ## Techniques
 Tools.
 - IDEA or VS-Code
