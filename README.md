@@ -1,10 +1,12 @@
 # BudgetBuddy
 A financial tracker that allows the user to track and interact with their finances. This app aims to simplify expense tracking, budgeting, and financial planning.
+
 ## Team Members
 - Srija Bhashyam
 - Art Guinto / aguin005
 - Tristan Cai
 - Junyan Hou
+
 ## Functional Features
 - User registration.
 - User login and logout.
@@ -85,6 +87,39 @@ As a user, I want to set up recurring payments so I do not need to manually ente
 As a user, I want to receive reminders for upcoming recurring payments.
 - Points: 2.
 - Recurring transactions requires a form and database.
+
+## Non-Functional Requirements
+Performance.
+- Fast response times to user actions.
+- Large scalability and throughput.
+
+Reliability.
+- Good uptime and good error messages.
+- Backup and recover data.
+
+Security.
+- Data encryption, user authentication and authorization.
+
+Usability.
+- Intuitive UI, accessible, and detailed documentation.
+
+Maintainability.
+- Follow best code practices, modularity, and logging.
+
+Compliance.
+- System follows legal and ethical practices regarding user data and auditing.
+
+Interoperability.
+- System allows API integration and exports data in standard formats.
+
+Localization.
+- Support for other languages and currencies.
+
+Efficiency.
+- Reduce server resources and operational costs, minimize power consumption.
+
+Portability.
+- Accessible via web browsers, easy to export data.
 
 ## Architecture
 TODO
