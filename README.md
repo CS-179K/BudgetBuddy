@@ -158,7 +158,8 @@ Database.
 
 
 
-## Initial Burndown Chart
+## Week 1 Burndown Chart
 
+![Burndown Chart](https://github.com/user-attachments/assets/8f2bd26e-f784-4939-a3d5-3c8d8f672bc1)
 
 
