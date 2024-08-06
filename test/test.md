@@ -12,9 +12,9 @@
 - Check if user is able to log in through landing page
 - Check if user can view landing page
 ### Connect Database to Login Page
-- Test 1
-- Test 2
-- Test 3
+- Check if user can log in with valid credentials
+- Check that user cannot login with invalid username
+- Check that database respects field constraints
 ### Make a database cluster to store usernames and passwords
 - Test 1
 - Test 2
