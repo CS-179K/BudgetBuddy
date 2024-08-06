@@ -16,18 +16,18 @@
 - Check that user cannot login with invalid username
 - Check that database respects field constraints
 ### Make a database cluster to store usernames and passwords
-- Test 1
-- Test 2
-- Test 3
+- Check that usernames store into database cluster.
+- Check that hashed passwords store into database cluster.
+- Check that user schema works properly.
 ### Install and Learn MongoDB
-- Test 1
-- Test 2
-- Test 3
+- Check that MongoDB installs properly on all devices.
+- Check that data properly stores into the MongoDB cluster.
+- Check if MongoDB cluster is accessible to only authorized ip addresses.
 ### Install and Learn OAuth
-- Test 1
-- Test 2
-- Test 3
+- Check if OAuth connects with MongoDB and stores user login information.
+- Check if authorization and authentication work properly on secure pages.
+- Check if OAuth installs properly on all devices.
 ### Install and Learn Postman
-- Test 1
-- Test 2
-- Test 3
+- Check if Postman installs properly on all devices.
+- Check if Postman properly sends requests.
+- Validate if Postman API keys work.
