@@ -8,9 +8,9 @@
 - Check if login button logs in user
 - Check for invalid login info denies login
 ### Make Landing Page
-- Test 1
-- Test 2
-- Test 3
+- Check if user is able to land on landing page
+- Check if user is able to log in through landing page
+- Check if user can view landing page
 ### Connect Database to Login Page
 - Test 1
 - Test 2
