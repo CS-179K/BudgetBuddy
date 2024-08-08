@@ -164,4 +164,7 @@ Database.
 
 ![Burndown Chart](https://github.com/user-attachments/assets/8f2bd26e-f784-4939-a3d5-3c8d8f672bc1)
 
+## Week 2 Wireframe
+
+![BudgetBuddy](https://github.com/user-attachments/assets/ecad76fb-b135-4e10-a2de-7cb614b35c30)
 
