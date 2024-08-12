@@ -31,39 +31,31 @@
 - Check if Postman installs properly on all devices.
 - Check if Postman properly sends requests.
 - Validate if Postman API keys work.
-### Create categories of spending
+### Create groceries, gas, and subscriptions spending categories
 - Check if there is a dropdown menu of categories.
 - Verify if use can enter personalized description.
-- Ensure database schema accurately reflects MongoDB cluster.
-### Create budget schema
-- Check if budget schema has correct data types.
-- Check if the budget associates with a user ID.
-- Verify if user can update budget. 
-### Create a Finances Page
+- Ensure user can track their spending habits.
+### Create a budget form
+- Check if user can track their total budget.
+- Check if the user can compare their budget to spending.
+- Check if user can change their budget.
+### Create a personalized finances page
 - Display extensive details on budget, spending, and expenses.
-- Create a sidebar with different categories.
-- Check if financial details are unique to user ID's.
-### Categorize sources of income
-- Place income sources into different groups like active or passive.
+- Check if the user can view different bar graphs for different finances.
+- Check if the the finances have percentage values.
+### Categorize sources of income as active and passive
+- Check if income sources are active or passive.
 - Compare income to expenses and budget.
-- Subtract income from budget to calculate savings.
+- Check if the user has savings from their income and budget.
 ### Create visual diagrams for finances
 - Create a bar graph for categories in spending.
 - Create a bar graph for categories in income.
 - Create a bar graph for comparing savings, budget, spending, and income.
-### Add a form for user income
+### Create a form for users to input income
 - Check if there is an input field for income.
 - Check if there are categories for user income.
 - Check if there is a input field for user income description.
-### Create income schema
-- Check if the income schema has correct data types.
-- Check if the income value associates with a user ID.
-- Check if user can update their income.
-### Create spending summary schema
-- Check if the income value subtracts from the total sum of the bank statements.
-- Check if the spending summary schema has correct data types.
-- Check if the total spending amount associates with a user and account ID.
-### Create bank statements schema
-- Check if the bank statement schema has the correct data types.
-- Check if the total sum of bank statements equals total spending.
-- Check if the bank statement associates with an account ID.
+### Create a spending summary chart
+- Check if the user's spending matches their budget.
+- Check if user's income is greater than their budget.
+- Check if there are percentages for user spending, budget, and income.
