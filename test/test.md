@@ -36,8 +36,8 @@
 - Verify if use can enter personalized description.
 - Ensure database schema accurately reflects MongoDB cluster.
 ### Create budget schema
-- Check if user can manually input a budget.
-- Check if budget subtracts from expenses.
+- Check if budget schema has correct data types.
+- Check if the budget associates with a user ID.
 - Verify if user can update budget. 
 ### Create a Finances Page
 - Display extensive details on budget, spending, and expenses.
@@ -51,3 +51,11 @@
 - Create a bar graph for categories in spending.
 - Create a bar graph for categories in income.
 - Create a bar graph for comparing savings, budget, spending, and income.
+### Add a form for user income
+- Check if there is an input field for income.
+- Check if there are categories for user income.
+- Check if there is a input field for user income description.
+### Create income schema
+- Check if income schema has correct data types.
+- Check if the income value associates with a user ID.
+- Check if user can update their income.
