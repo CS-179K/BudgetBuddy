@@ -167,6 +167,9 @@ Database.
 ## Week 2 Wireframe
 
 ![BudgetBuddy](https://github.com/user-attachments/assets/ecad76fb-b135-4e10-a2de-7cb614b35c30)
+
+## Week 2 MongoDB Schema
+
 ![image](https://github.com/user-attachments/assets/ef7b556f-a1e6-4cec-b948-36743991fdda)
 
 
