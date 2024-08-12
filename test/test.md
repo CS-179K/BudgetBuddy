@@ -43,7 +43,11 @@
 - Display extensive details on budget, spending, and expenses.
 - Create a sidebar with different categories.
 - Check if financial details are unique to user ID's.
-### Categorize sources of income.
+### Categorize sources of income
 - Place income sources into different groups like active or passive.
 - Compare income to expenses and budget.
 - Subtract income from budget to calculate savings.
+### Create visual diagrams for finances
+- Create a bar graph for categories in spending.
+- Create a bar graph for categories in income.
+- Create a bar graph for comparing savings, budget, spending, and income.
