@@ -56,10 +56,14 @@
 - Check if there are categories for user income.
 - Check if there is a input field for user income description.
 ### Create income schema
-- Check if income schema has correct data types.
+- Check if the income schema has correct data types.
 - Check if the income value associates with a user ID.
 - Check if user can update their income.
 ### Create spending summary schema
 - Check if the income value subtracts from the total sum of the bank statements.
 - Check if the spending summary schema has correct data types.
 - Check if the total spending amount associates with a user and account ID.
+### Create bank statements schema
+- Check if the bank statement schema has the correct data types.
+- Check if the total sum of bank statements equals total spending.
+- Check if the bank statement associates with an account ID.
