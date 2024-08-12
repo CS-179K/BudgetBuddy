@@ -176,4 +176,8 @@ Database.
 
 <img width="895" alt="Screenshot 2024-08-12 at 9 32 38 AM" src="https://github.com/user-attachments/assets/a1ee4cd8-e30f-4551-9e3b-91d7ad27d614">
 
+## Week 3 Sprint 2 Wireframe
+
+<img width="931" alt="Screenshot 2024-08-12 at 3 28 11 PM" src="https://github.com/user-attachments/assets/e63c1d37-2d7c-4034-97d2-1f66c92718a6">
+
 
