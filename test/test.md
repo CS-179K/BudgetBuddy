@@ -31,11 +31,19 @@
 - Check if Postman installs properly on all devices.
 - Check if Postman properly sends requests.
 - Validate if Postman API keys work.
-### Create categories of spending.
+### Create categories of spending
 - Check if there is a dropdown menu of categories.
 - Verify if use can enter personalized description.
 - Ensure database schema accurately reflects MongoDB cluster.
-### Create budget schema.
+### Create budget schema
 - Check if user can manually input a budget.
 - Check if budget subtracts from expenses.
 - Verify if user can update budget. 
+### Create a Finances Page
+- Display extensive details on budget, spending, and expenses.
+- Create a sidebar with different categories.
+- Check if financial details are unique to user ID's.
+### Categorize sources of income.
+- Place income sources into different groups like active or passive.
+- Compare income to expenses and budget.
+- Subtract income from budget to calculate savings.
