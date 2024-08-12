@@ -172,4 +172,8 @@ Database.
 
 ![image](https://github.com/user-attachments/assets/ef7b556f-a1e6-4cec-b948-36743991fdda)
 
+## Week 3 Burndown Chart
+
+<img width="895" alt="Screenshot 2024-08-12 at 9 32 38 AM" src="https://github.com/user-attachments/assets/a1ee4cd8-e30f-4551-9e3b-91d7ad27d614">
+
 
