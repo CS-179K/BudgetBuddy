@@ -1,8 +1,10 @@
 import { useState } from "react"
-import { useInvestmentsContext } from "../hooks/useInvestmentsContext" 
+import { useInvestmentsContext } from "../hooks/useInvestmentsContext"
+import { useAuthContext } from "../hooks/useAuthContext" 
 
 const InvestmentForm = () => {
     const { dispatch } = useInvestmentsContext()
+    const { user } = useAuthContext()
 
     const [title, setTitle] = useState('')
     const [amount, setAmount] = useState('')
@@ -12,13 +14,19 @@ const InvestmentForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
+
         const investment = {title, amount}
 
         const response = await fetch('/api/investments', {
             method: 'POST',
             body: JSON.stringify(investment),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()
