@@ -1,14 +1,23 @@
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 // Date FNS Library
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const InvestmentDetails = ({ investment }) => {
     const { dispatch } = useInvestmentsContext()
+    const { user } = useAuthContext()
 
     const handleClick = async () => {
+        if (!user) {
+            return
+        }
+
         const response = await fetch('/api/investments/' + investment._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
         const json = await response.json()

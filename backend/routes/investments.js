@@ -7,7 +7,12 @@ const {
     updateInvestment
 } = require('../controllers/investmentController')
 
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
+
+// Require Auth for all investment routes
+router.use(requireAuth)
 
 // GET all investments
 router.get('/', getInvestments)
@@ -18,7 +23,7 @@ router.get('/:id', getInvestment)
 // POST a new investment
 router.post('/', createInvestment)
 
-// DELETE a new investment
+// DELETE a investment
 router.delete('/:id', deleteInvestment)
 
 // UPDATE a investment
