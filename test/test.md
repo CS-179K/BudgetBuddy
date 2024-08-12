@@ -59,3 +59,7 @@
 - Check if income schema has correct data types.
 - Check if the income value associates with a user ID.
 - Check if user can update their income.
+### Create spending summary schema
+- Check if the income value subtracts from the total sum of the bank statements.
+- Check if the spending summary schema has correct data types.
+- Check if the total spending amount associates with a user and account ID.
