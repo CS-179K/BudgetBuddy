@@ -31,3 +31,11 @@
 - Check if Postman installs properly on all devices.
 - Check if Postman properly sends requests.
 - Validate if Postman API keys work.
+### Create categories of spending.
+- Check if there is a dropdown menu of categories.
+- Verify if use can enter personalized description.
+- Ensure database schema accurately reflects MongoDB cluster.
+### Create budget schema.
+- Check if user can manually input a budget.
+- Check if budget subtracts from expenses.
+- Verify if user can update budget. 
