@@ -12,6 +12,6 @@ Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### Before start please create the .env file under the root of backend 
-include: MONGO_URI and PORT to run the MongoDB(You could config your own cluster on https://www.mongodb.com/ for free)
+include: MONGO_URI (You could config your own cluster on https://www.mongodb.com/ for free), PORT and SECRET to run the MongoDB
 The PORT could be 4000 to support frontend.
 

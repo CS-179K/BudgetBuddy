@@ -61,6 +61,7 @@ const InvestmentForm = () => {
                 type = "number"
                 onChange = {(e) => setAmount(e.target.value)}
                 value = {amount}
+                min="0"
                 className = {emptyFields.includes('amount') ? 'error' : ''}
             />
 
