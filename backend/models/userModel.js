@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 const validator = require('validator')
 
 const Schema = mongoose.Schema
+const MAX_LOGIN_ATTEMPTS = 5; // Maximum allowed attempts before lockout
+const LOCK_TIME = 2 * 60 * 60 * 1000; // 2 hours lock time
 
 const userSchema = new Schema({
     email: {
@@ -51,17 +53,38 @@ userSchema.statics.login = async function(email, password) {
 
     const user = await this.findOne({ email })
 
+    // Validate email format
+    if (!validator.isEmail(email)) {
+        throw Error('Invalid email format');
+    }
+
     if (!user) {
         throw Error('Incorrect Email Address')
     }
-
+    if (user.lockUntil && user.lockUntil > Date.now()) {
+        throw Error('Account is temporarily locked due to multiple failed login attempts. Please try again later.');
+    }
     const match = await bcrypt.compare(password, user.password)
 
     if (!match) {
+
+        user.loginAttempts = (user.loginAttempts || 0) + 1;
+
+        if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+            user.lockUntil = Date.now() + LOCK_TIME;
+        }
+        await user.save();
+
         throw Error('Incorrect Password')
     }
+    // Reset login attempts on successful login
+    if (user.loginAttempts && user.loginAttempts > 0) {
+        user.loginAttempts = 0;
+        user.lockUntil = undefined;
+        await user.save();
+    }
 
-    return user
+    return user;
 }
 
 module.exports = mongoose.model('User', userSchema)
