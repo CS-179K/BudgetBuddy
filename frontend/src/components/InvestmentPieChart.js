@@ -6,9 +6,9 @@ const InvestmentPieChart = () => {
     const { investments } = useInvestmentsContext()
 
     const data = [
-        ['Investment', 'Amount'],
-        ...(investments ? investments.map(investment => [investment.title, investment.amount]) : [])
-    ]
+        ['Investment', 'Amount', { role: 'tooltip', type: 'string' }],
+        ...(investments ? investments.map(investment => [investment.title, investment.amount, `Investment: ${investment.title}\nAmount: $${investment.amount}`]) : [])
+    ];
 
     const options = {
         backgroundColor: 'transparent',
