@@ -7,22 +7,24 @@ const InvestmentPieChart = () => {
 
     const data = [
         ['Investment', 'Amount'],
-        ...investments.map(investment => [investment.title, investment.amount])
+        ...(investments ? investments.map(investment => [investment.title, investment.amount]) : [])
     ]
 
     const options = {
-        title: 'Investment Chart',
+        backgroundColor: 'transparent',
+        legend: { position: 'left' },
         is3D: false,
+        pieHole: 0.4,
     }
 
     return (
-        <div className="investment-chart">
+        <div className="investment-chart-container">
             <Chart
                 chartType="PieChart"
                 data={data}
                 options={options}
-                width="900px"
-                height="500px"
+                width="100%"
+                height="100%"
             />
         </div>
     )
