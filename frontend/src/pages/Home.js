@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 // BudgetBuddy Components
 import InvestmentDetails from '../components/InvestmentDetails'
 import InvestmentForm from '../components/InvestmentForm'
+import InvestmentPieChart from '../components/InvestmentPieChart'
 
 const Home = () => {
     const {investments, dispatch} = useInvestmentsContext()
@@ -37,6 +38,7 @@ const Home = () => {
                 ))}
             </div>
             <InvestmentForm />
+            <InvestmentPieChart />
         </div>
     )
 }
