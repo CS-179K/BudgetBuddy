@@ -9,6 +9,15 @@
     font-size: 16px;
 }
 
+.create input[type="text"].description {
+    width: 100%; /* 保持与其他输入框一致的宽度 */
+    height: 100px; /* 调整高度，使其比其他输入框更大 */
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
 .create button {
     width: 100%;
     padding: 10px;
