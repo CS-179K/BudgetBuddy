@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useInvestmentsContext } from "../hooks/useInvestmentsContext"
 import { useAuthContext } from "../hooks/useAuthContext" 
+import InvestmentPieChart from '../components/InvestmentPieChart'
 
 const InvestmentForm = () => {
     const { dispatch } = useInvestmentsContext()
@@ -66,6 +67,9 @@ const InvestmentForm = () => {
             />
 
             <button> Add Investment </button>
+            <div className = "chart-container">
+                <InvestmentPieChart />
+            </div>
             {error && <div className = "error">{error}</div>}
         </form>
     )
