@@ -27,6 +27,12 @@ const Navbar = () => {
                     )}
                     {!user && (
                         <div>
+                            <div className="jumbotron text-center text-primary">
+                                <a href="https://github.com/login/oauth/authorize?client_id=<%= client_id %>"
+                               className="btn btn-danger"><span className="fa fa-github"></span> Github Login</a>
+                            </div>
+                            {/*<a href="/github/login">Login With Github</a>*/}
+                            {/*<Link to = "/github/login">Login With Github</Link>*/}
                             <Link to = "/login">Login</Link>
                             <Link to = "/signup">Signup</Link>
                         </div>
