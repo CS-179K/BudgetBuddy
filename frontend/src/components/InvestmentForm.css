@@ -1,0 +1,28 @@
+
+.create input[type="text"],
+.create input[type="number"],
+.create select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.create button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.create button:hover {
+    background-color: #0056b3;
+}
+
+.button-container {
+    margin-top: 10px;
+}
