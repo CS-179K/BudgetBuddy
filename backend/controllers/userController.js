@@ -4,6 +4,11 @@ const jwt = require('jsonwebtoken')
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
+const config = {
+    client_id: 'Ov23liQXNGCyDF6pFsXs',
+    client_secret: '4d554128c95a7955126106b1d207d66b22fd50cf'
+}
+
 
 // Login User
 const loginUser = async (req, res) => {
