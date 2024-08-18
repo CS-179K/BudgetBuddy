@@ -108,11 +108,8 @@ header a {
 }
 
 .chart-container {
-  width: 450px;
-  height: 300px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 600px;
+  height: 600px; 
 }
 
 .investment-chart-container {
