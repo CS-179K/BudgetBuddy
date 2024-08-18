@@ -40,7 +40,7 @@ const InvestmentForm = () => {
         } else {
             setTitle('')
             setAmount('')
-            setInvestmentType('gas')
+            setInvestmentType('')
             setDescription('')
             setError(null)
             setEmptyFields([])
@@ -74,6 +74,7 @@ const InvestmentForm = () => {
                 value={investmentType}
                 className={emptyFields.includes('investmentType') ? 'error' : ''}
             >
+                <option value=""></option>
                 <option value="gas">Gas</option>
                 <option value="groceries">Groceries</option>
                 <option value="subscriptions">Subscriptions</option>
