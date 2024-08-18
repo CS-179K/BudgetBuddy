@@ -1,4 +1,4 @@
-## Testing
+## Testing Week 1
 ### Make Login and Authentication Page
 - Check if user is able to authenticate
 - Check if user can goto authentication page
@@ -31,6 +31,8 @@
 - Check if Postman installs properly on all devices.
 - Check if Postman properly sends requests.
 - Validate if Postman API keys work.
+
+## Testing Week 2
 ### Create groceries, gas, and subscriptions spending categories
 - Check if there is a dropdown menu of categories.
 - Verify if use can enter personalized description.
@@ -51,11 +53,11 @@
 - Create a bar graph for categories in spending.
 - Create a bar graph for categories in income.
 - Create a bar graph for comparing savings, budget, spending, and income.
-### Create a form for users to input income
+### Update budget form for users to input income
 - Check if there is an input field for income.
 - Check if there are categories for user income.
 - Check if there is a input field for user income description.
-### Create a spending summary chart
+### Create a spending summary pie chart
 - Check if the user's spending matches their budget.
 - Check if user's income is greater than their budget.
 - Check if there are percentages for user spending, budget, and income.
