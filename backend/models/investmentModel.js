@@ -11,6 +11,10 @@ const investmentSchema = new Schema({
         type: Number,
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     user_id: {
         type: String,
         required: true

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useInvestmentsContext } from "../hooks/useInvestmentsContext"
-import { useAuthContext } from "../hooks/useAuthContext" 
+import { useAuthContext } from "../hooks/useAuthContext"
+import './InvestmentForm.css';
 import InvestmentPieChart from '../components/InvestmentPieChart'
 
 const InvestmentForm = () => {
@@ -10,6 +11,7 @@ const InvestmentForm = () => {
     const [title, setTitle] = useState('')
     const [amount, setAmount] = useState('')
     const [error, setError] = useState(null)
+    const [type, setType] = useState('');
     const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
@@ -65,6 +67,15 @@ const InvestmentForm = () => {
                 min="0"
                 className = {emptyFields.includes('amount') ? 'error' : ''}
             />
+            <label>Type:</label>
+            <select
+                onChange={(e) => setType(e.target.value)}
+                value={type}
+                className={emptyFields.includes('type') ? 'error' : ''}
+            >
+                <option value="gas">Gas</option>
+                <option value="groceries">Groceries</option>
+            </select>
 
             <button> Add Investment </button>
             <div className = "chart-container">
