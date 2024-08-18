@@ -11,11 +11,11 @@ const investmentSchema = new Schema({
         type: Number,
         required: true
     },
-    type: {
+    investmentType: {
         type: String,
         required: true
     },
-    description: {
+    investmentDescription: {
         type: String,
         required: true
     },

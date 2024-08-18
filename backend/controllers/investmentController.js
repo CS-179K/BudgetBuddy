@@ -29,7 +29,7 @@ const getInvestment = async (req, res) => {
 
 // Create a new investment
 const createInvestment = async (req, res) => {
-    const {title, amount} = req.body
+    const {title, amount, investmentType, investmentDescription} = req.body
 
     let emptyFields = []
 
@@ -39,14 +39,21 @@ const createInvestment = async (req, res) => {
     if (!amount) {
         emptyFields.push('amount')
     }
-    if (emptyFields.length > 0) {
-        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
+    if (!investmentType) {
+        emptyFields.push('investmentType')
+    }
+    if (!investmentDescription) {
+        emptyFields.push('investmentDescription')
     }
 
+    if (emptyFields.length > 0) {
+        console.log(emptyFields)
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
+    }
     // Add document to database
     try {
         const user_id = req.user._id
-        const investment = await Investment.create({title, amount, user_id})
+        const investment = await Investment.create({title, amount, investmentType, investmentDescription, user_id})
         res.status(200).json(investment)
     } catch (error) {
         res.status(400).json({error: error.message})

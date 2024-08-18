@@ -9,8 +9,8 @@ const InvestmentForm = () => {
     const [title, setTitle] = useState('')
     const [amount, setAmount] = useState('')
     const [error, setError] = useState(null)
-    const [type, setType] = useState('');
-    const [InvestmentDescription, setDescription] = useState('');
+    const [investmentType, setInvestmentType] = useState('');
+    const [investmentDescription, setDescription] = useState('');
     const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
@@ -21,7 +21,7 @@ const InvestmentForm = () => {
             return
         }
 
-        const investment = {title, amount}
+        const investment = {title, amount, investmentType, investmentDescription}
 
         const response = await fetch('/api/investments', {
             method: 'POST',
@@ -35,16 +35,16 @@ const InvestmentForm = () => {
 
         if (!response.ok) {
             setError(json.error)
-            setEmptyFields(json.emptyFields)
-        }
-        if (response.ok) {
+            setEmptyFields(json.emptyFields || [])
+        } else {
             setTitle('')
             setAmount('')
-            setType('')
+            setInvestmentType('gas')
+            setDescription('')
             setError(null)
             setEmptyFields([])
             console.log('New Investment Added', json)
-            dispatch({type: 'CREATE_INVESTMENT', payload: json})
+            dispatch({ type: 'CREATE_INVESTMENT', payload: json })
         }
     }
     return (
@@ -56,7 +56,7 @@ const InvestmentForm = () => {
                 type = "text"
                 onChange = {(e) => setTitle(e.target.value)}
                 value = {title}
-                className = {emptyFields.includes('title') ? 'error' : 'title'}
+                className = {emptyFields.includes('title') ? 'error' : ''}
             />
 
             <label> Amount in $: </label>
@@ -65,23 +65,24 @@ const InvestmentForm = () => {
                 onChange = {(e) => setAmount(e.target.value)}
                 value = {amount}
                 min="0"
-                className = {emptyFields.includes('amount') ? 'error' : 'amount'}
+                className = {emptyFields.includes('amount') ? 'error' : ''}
             />
             <label>Type:</label>
             <select
-                onChange={(e) => setType(e.target.value)}
-                value={type}
-                className={emptyFields.includes('type') ? 'error' : 'type'}
+                onChange={(e) => setInvestmentType(e.target.value)}
+                value={investmentType}
+                className={emptyFields.includes('investmentType') ? 'error' : ''}
             >
                 <option value="gas">Gas</option>
                 <option value="groceries">Groceries</option>
+                <option value="subscriptions">Subscriptions</option>
             </select>
             <label> Investment Description: </label>
-            <input
+            <textarea
                 type = "text"
                 onChange = {(e) => setDescription(e.target.value)}
-                value = {InvestmentDescription}
-                className = {emptyFields.includes('description') ? 'error' : 'description'}
+                value = {investmentDescription}
+                className = {emptyFields.includes('investmentDescription') ? 'error' : 'description'}
             />
 
             <button> Add Investment </button>
