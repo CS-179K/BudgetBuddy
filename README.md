@@ -180,7 +180,9 @@ Database.
 
 <img width="931" alt="Screenshot 2024-08-12 at 3 28 11 PM" src="https://github.com/user-attachments/assets/e63c1d37-2d7c-4034-97d2-1f66c92718a6">
 
-## Week 3 Sprint 2 Schema
+## Week 3 Sprint 2 Schema and Architecture
 
-<img width="882" alt="Screenshot 2024-08-12 at 3 37 59 PM" src="https://github.com/user-attachments/assets/9aa8e418-cced-438a-ab66-3b9a8fa7568d">
+![CS179K BudgetBuddy](https://github.com/user-attachments/assets/afae1ae9-7c96-470a-bb11-458f4a8e94a5)
+
+
 
