@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useInvestmentsContext } from "../hooks/useInvestmentsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import './InvestmentForm.css';
-import InvestmentPieChart from '../components/InvestmentPieChart'
 
 const InvestmentForm = () => {
     const { dispatch } = useInvestmentsContext()
@@ -41,7 +40,7 @@ const InvestmentForm = () => {
         } else {
             setTitle('')
             setAmount('')
-            setInvestmentType('gas')
+            setInvestmentType('')
             setDescription('')
             setError(null)
             setEmptyFields([])
@@ -75,6 +74,7 @@ const InvestmentForm = () => {
                 value={investmentType}
                 className={emptyFields.includes('investmentType') ? 'error' : ''}
             >
+                <option value=""></option>
                 <option value="gas">Gas</option>
                 <option value="groceries">Groceries</option>
                 <option value="subscriptions">Subscriptions</option>
@@ -88,9 +88,6 @@ const InvestmentForm = () => {
             />
 
             <button> Add Investment </button>
-            <div className = "chart-container">
-                <InvestmentPieChart />
-            </div>
             {error && <div className = "error">{error}</div>}
         </form>
     )
