@@ -73,3 +73,9 @@
 - Check if the user can input a description.
 - Check if the user can make a description with 20 words.
 - Check if the description is a requirement.
+
+## Testing Week 3
+### Create a bank statement side bar link.
+- Check if the side bar link displays when logged in.
+- Check if the user can click the side bar link.
+- Check if it dynamically loads the content for importing their bank statements.
