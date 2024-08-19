@@ -81,7 +81,7 @@
 - Check if it dynamically loads the content for importing their bank statements.
 ### Create a bank statement import button.
 ### Create a pie chart detailing where income sources come from
-### Create separate sidebar with two buttons separating importing bank transactions from detailed spending summary
+### Create separate sidebar separating importing bank transactions from detailed spending summary
 ### Create threshold notifications when user's total investments reach 50%, 25%, and 10% of their budget
 ### Create monthly and yearly categories of financial activity within the app
 ### Create a pie chart detailing bank statement transactions
