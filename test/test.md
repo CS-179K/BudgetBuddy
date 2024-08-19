@@ -37,23 +37,23 @@
 - Check if there is a dropdown menu of categories.
 - Verify if use can enter personalized description.
 - Ensure user can track their spending habits.
-### Create a budget form
+### Add a form for user budget
 - Check if user can track their total budget.
 - Check if the user can compare their budget to spending.
 - Check if user can change their budget.
 ### Create a personalized finances page
 - Display extensive details on budget, spending, and expenses.
-- Check if the user can view different bar graphs for different finances.
+- Check if the user can view a pie graph tracking different finances.
 - Check if the the finances have percentage values.
 ### Categorize sources of income as active and passive
 - Check if income sources are active or passive.
 - Compare income to expenses and budget.
 - Check if the user has savings from their income and budget.
 ### Create visual diagrams for finances
-- Create a bar graph for categories in spending.
-- Create a bar graph for categories in income.
-- Create a bar graph for comparing savings, budget, spending, and income.
-### Update budget form for users to input income
+- Create a pie graph for categories in spending.
+- Create a pie graph for categories in income.
+- Create a pie graph for comparing savings, budget, spending, and income.
+### Add a form for user income
 - Check if there is an input field for income.
 - Check if there are categories for user income.
 - Check if there is a input field for user income description.
@@ -61,3 +61,15 @@
 - Check if the user's spending matches their budget.
 - Check if user's income is greater than their budget.
 - Check if there are percentages for user spending, budget, and income.
+### Create a menu to display investments, budgets, and incomes.
+- Check if the user's budget display when clicking budget.
+- Check if the user's investments display when clicking investments.
+- Check if the user's incomes display when clicking incomes.
+### Create an account summary detailing savings.
+- Check if the user can see their income.
+- Check if the user can compare investments to their budget.
+- Check if the user can see their savings.
+### Add a description for user investments.
+- Check if the user can input a description.
+- Check if the user can make a description with 20 words.
+- Check if the description is a requirement.
