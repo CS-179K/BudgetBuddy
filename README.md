@@ -64,11 +64,11 @@ Data Security.
 - Points: 3.
 - Requires API, extra layer of security.
 
-Integration with Bank Accounts.
-- As a user, I want to connect my bank accounts to import transactions to the system.
-- As a user, I want to see my real-time bank account balances so I can have an up-to-date view of my finances.
+CSV File Imports for Bank Statements.
+- As a user, I want to import my bank statements to track real transactions.
+- As a user, I want to compare my income and transactions with my ideal spending goals.
 - Points: 7.
-- Requires API, potential security flaws.
+- Requires comprehensive understanding of converting CSV files to JSON.
 
 Financial Reports.
 - As a user, I want to generate monthly and yearly financial reports detailing financial performance.
