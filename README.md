@@ -56,7 +56,7 @@ Saving Goals.
 - As a user, I want to create savings goals for long-term future expenses.
 - As a user, I want to track how many savings I have towards a saving goal.
 - Points: 2.
-- Saving goals requires a form.
+- Saving goals requires multiple schema already completed.
 
 Data Security.
 - As a user, I want to secure my financial data and ensure confidential information is safe.
