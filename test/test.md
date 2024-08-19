@@ -75,7 +75,14 @@
 - Check if the description is a requirement.
 
 ## Testing Week 3
-### Create a bank statement side bar link.
+### Display bank statement transactions when user clicks bank statements on a sidebar.
 - Check if the side bar link displays when logged in.
 - Check if the user can click the side bar link.
 - Check if it dynamically loads the content for importing their bank statements.
+### Create a bank statement import button.
+### Create a pie chart detailing where income sources come from
+### Create a separate sidebar with two buttons for separating importing bank transactions from detailed spending summary
+### Create threshold notifications when user's total investments reach 50%, 25%, and 10% of their budget
+### Create monthly and yearly categories of financial activity within the app
+### Create a pie chart detailing bank statement transactions
+### Contrast income and bank statement transactions with ideal savings in the account summary
