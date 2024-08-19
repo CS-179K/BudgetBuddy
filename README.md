@@ -172,7 +172,7 @@ Database.
 
 ![image](https://github.com/user-attachments/assets/ef7b556f-a1e6-4cec-b948-36743991fdda)
 
-## Week 3 Burndown Chart
+## Week 3 Burndown Chart Sprint 1
 
 <img width="895" alt="Screenshot 2024-08-12 at 9 32 38 AM" src="https://github.com/user-attachments/assets/a1ee4cd8-e30f-4551-9e3b-91d7ad27d614">
 
@@ -183,6 +183,10 @@ Database.
 ## Week 3 Sprint 2 Schema and Architecture
 
 ![CS179K BudgetBuddy](https://github.com/user-attachments/assets/afae1ae9-7c96-470a-bb11-458f4a8e94a5)
+
+## Week 4 Sprint 2 Schema and Architecture
+
+<img width="903" alt="Screenshot 2024-08-19 at 9 56 39 AM" src="https://github.com/user-attachments/assets/59cca289-34ca-49e6-a74f-52d70720dc3a">
 
 
 
