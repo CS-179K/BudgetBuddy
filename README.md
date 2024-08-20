@@ -156,9 +156,6 @@ Backend.
 
 Database.
 - MongoDB.
-- MySQL(elective)
-
-
 
 ## Week 1 Burndown Chart
 
