@@ -56,7 +56,7 @@ Saving Goals.
 - As a user, I want to create savings goals for long-term future expenses.
 - As a user, I want to track how many savings I have towards a saving goal.
 - Points: 2.
-- Saving goals requires a form.
+- Saving goals requires multiple schema already completed.
 
 Data Security.
 - As a user, I want to secure my financial data and ensure confidential information is safe.
@@ -64,11 +64,11 @@ Data Security.
 - Points: 3.
 - Requires API, extra layer of security.
 
-Integration with Bank Accounts.
-- As a user, I want to connect my bank accounts to import transactions to the system.
-- As a user, I want to see my real-time bank account balances so I can have an up-to-date view of my finances.
+CSV File Imports for Bank Statements.
+- As a user, I want to import my bank statements to track real transactions.
+- As a user, I want to compare my income and transactions with my ideal spending goals.
 - Points: 7.
-- Requires API, potential security flaws.
+- Requires comprehensive understanding of converting CSV files to JSON.
 
 Financial Reports.
 - As a user, I want to generate monthly and yearly financial reports detailing financial performance.
@@ -156,9 +156,6 @@ Backend.
 
 Database.
 - MongoDB.
-- MySQL(elective)
-
-
 
 ## Week 1 Burndown Chart
 
@@ -187,6 +184,11 @@ Database.
 ## Week 4 Sprint 2 Schema and Architecture
 
 <img width="903" alt="Screenshot 2024-08-19 at 9 56 39 AM" src="https://github.com/user-attachments/assets/59cca289-34ca-49e6-a74f-52d70720dc3a">
+
+## Week 4 Sprint 3 Wireframe
+
+<img width="823" alt="Screenshot 2024-08-19 at 12 36 10 PM" src="https://github.com/user-attachments/assets/72b98b54-b6dc-4300-b6d4-2fab5d8c9336">
+
 
 
 

@@ -73,3 +73,37 @@
 - Check if the user can input a description.
 - Check if the user can make a description with 20 words.
 - Check if the description is a requirement.
+
+## Testing Week 3
+### Display bank statement transactions when user clicks bank statements on a sidebar.
+- Check if the side bar link displays when logged in.
+- Check if the user can click the side bar link.
+- Check if it dynamically loads the content for importing their bank statements.
+### Create a bank statement import button.
+- Check if the user can click on the import button.
+- Check if the user can implement only CSV files.
+- Check if it properly converts a CSV file to JSON.
+### Create a pie chart detailing where income sources come from
+- Check if the pie chart details different income source titles.
+- Check if the user can hover over the pie chart to display money and the type of income.
+- Check if the pie chart displays percentages.
+### Create separate sidebar separating importing bank transactions from detailed spending summary
+- Check if there is a separate sidebar only in the bank statements sidebar.
+- Check if the user can click either bank transactions or spending summary.
+- Check if the buttons dynamically load a bank statement import button or their spending summary.
+### Create threshold notifications when user's total investments reach 50%, 25%, and 10% of their budget
+- Check if the user receives a notification if their threshold reaches 50%.
+- Check if the user receives a notification if their threshold reaches 25%.
+- Check if the user receives a notification if their threshold reaches 10%.
+### Create monthly and yearly categories of spending summary within the app
+- Check if the user can click monthly of yearly buttons.
+- Check if the monthly button shows spending summary from the past month.
+- Check if the yearly button shows spending summary from the past year.
+### Create a pie chart detailing bank statement transactions
+- Check if the pie chart details different bank statement transactions.
+- Check if the user can hover over the pie chart to display money and the type of transaction.
+- Check if the pie chart displays percentages.
+### Contrast income and bank statement transactions with ideal savings in the account summary
+- Check if the account summary displays the user's income subtracted from their total transactions.
+- Check if the bank statement transaction and income total is accurate.
+- Check if the user can compare their actual spending habits with their ideal savings.
