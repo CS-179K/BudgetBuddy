@@ -2,25 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useInvestmentsContext } from "../hooks/useInvestmentsContext";
 import { useBudgetsContext } from "../hooks/useBudgetsContext";
 import { useIncomesContext } from "../hooks/useIncomesContext";
+import { useBanksContext } from "../hooks/useBanksContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 // BudgetBuddy Components
 import Sidebar from '../components/Sidebar';
+
 import ToggleInvestmentForm from '../components/ToggleInvestmentForm';
+
 import InvestmentDetails from '../components/InvestmentDetails';
 import InvestmentForm from '../components/InvestmentForm';
 import BudgetDetails from '../components/BudgetDetails';
 import BudgetForm from '../components/BudgetForm';
 import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
+import StatementDetails from '../components/StatementDetails';
+
 import InvestmentPieChart from '../components/InvestmentPieChart';
 
 const Home = () => {
     const [activeView, setActiveView] = useState('investments');
-    const [activeViewInvestment, setActiveViewInvestment] = useState('investmentForm');
+    const [activeViewInvestment, setActiveViewInvestment] = useState('neither');
     const { investments, dispatch } = useInvestmentsContext();
     const { budgets, budgetDispatch } = useBudgetsContext();
     const { incomes, incomeDispatch } = useIncomesContext();
+    const { files, fileDispatch } = useBanksContext();
     const { user } = useAuthContext();
 
     const handleSetActiveView = (view) => {
@@ -62,6 +68,17 @@ const Home = () => {
                         <IncomeForm />
                     </div>
                 );
+            case 'statements':
+                return (
+                    <div className = "home">
+                        <div className="budgets">
+                            <h2>Statements</h2>
+                            {files && files.map((file) => (
+                                <StatementDetails key={file._id} file={file} />
+                            ))}
+                        </div>  
+                    </div>
+                )
             default:
                 return (
                     <div className="home">
@@ -165,6 +182,26 @@ const Home = () => {
         }
     }, [incomeDispatch, user]);
 
+    useEffect(() => {
+        const fetchFiles = async () => {
+            const response = await fetch ('banks/upload', {
+                headers: {
+                    'Authorization' : `Bearer ${user.token}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                fileDispatch({ type: 'SET_FILES', payload: json });
+            }
+        };
+
+        if (user) {
+            fetchFiles();
+        }
+    }, [fileDispatch, user]);
+
     const totalInvestmentValue = investments
         ? investments.reduce((total, investment) => total + investment.amount, 0)
         : 0;
@@ -180,13 +217,13 @@ const Home = () => {
     return (
         <div>
             <Sidebar setActiveView={handleSetActiveView} />
-            {renderView()}
             <div style={{ flex: 1, padding: '15px' }}>
                 <h1>Account Summary</h1>
                 <p>Your income is currently ${totalIncomeValue}.</p>
                 <p>You are currently investing ${totalInvestmentValue} and your budget is ${totalBudgetValue}.</p>
                 <p>You save ${totalBudgetValue - totalInvestmentValue} if you only spend on your investments.</p>
             </div>
+            {renderView()}
             {renderViewInvestment()}
         </div>
     );
