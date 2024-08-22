@@ -13,7 +13,7 @@ const StatementDetails = ({ file }) => {
             return
         }
 
-        const response = await fetch ('/banks/upload' + file._id, {
+        const response = await fetch ('banks/upload/' + file._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
