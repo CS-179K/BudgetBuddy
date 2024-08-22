@@ -17,6 +17,7 @@ import BudgetForm from '../components/BudgetForm';
 import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
+import StatementUpload from '../components/StatementUpload';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 
@@ -31,7 +32,7 @@ const Home = () => {
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
-        if (view === 'budgets' || view === 'incomes') {
+        if (view === 'budgets' || view === 'incomes' || view === 'statements') {
             setActiveViewInvestment('neither');
         }
     };
@@ -77,6 +78,7 @@ const Home = () => {
                                 <StatementDetails key={file._id} file={file} />
                             ))}
                         </div>  
+                        <StatementUpload />
                     </div>
                 )
             default:
@@ -214,14 +216,19 @@ const Home = () => {
         ? incomes.reduce((total, income) => total + income.amount, 0)
         : 0;
 
+    const totalStatementValue = files
+        ? files.reduce((total, file) => total - file.amount, 0)
+        : 0;
+
     return (
         <div>
             <Sidebar setActiveView={handleSetActiveView} />
             <div style={{ flex: 1, padding: '15px' }}>
                 <h1>Account Summary</h1>
-                <p>Your income is currently ${totalIncomeValue}.</p>
-                <p>You are currently investing ${totalInvestmentValue} and your budget is ${totalBudgetValue}.</p>
-                <p>You save ${totalBudgetValue - totalInvestmentValue} if you only spend on your investments.</p>
+                <p>Your income is currently ${totalIncomeValue} and you spent ${totalStatementValue.toFixed(2)} last month.</p>
+                <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} last month.</p>
+                <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} this month.</p>
+                <p>You plan to save ${totalBudgetValue - totalInvestmentValue} this month.</p>
             </div>
             {renderView()}
             {renderViewInvestment()}
