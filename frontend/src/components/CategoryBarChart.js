@@ -2,7 +2,7 @@ import React from 'react';
 import { Chart } from 'react-google-charts';
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext';
 
-const CategoryPieChart = () => {
+const CategoryBarChart = () => {
     const { investments } = useInvestmentsContext();
 
     const investmentTypeTotals = investments.reduce((acc, investment) => {
@@ -39,4 +39,4 @@ const CategoryPieChart = () => {
     );
 };
 
-export default CategoryPieChart;
+export default CategoryBarChart;
