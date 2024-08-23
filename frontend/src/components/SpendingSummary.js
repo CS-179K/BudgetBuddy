@@ -1,7 +1,7 @@
 import React from 'react';
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext';
 import { useIncomesContext } from '../hooks/useIncomesContext';
-import CategoryPieChart from './CategoryPieChart';
+import CategoryBarChart from './CategoryBarChart';
 
 const SpendingSummary = () => {
     const { investments } = useInvestmentsContext();
@@ -15,7 +15,7 @@ const SpendingSummary = () => {
     return (
         <div className="spending-summary">
             <p>Total monthly investments: ${totalInvestmentValue.toFixed(2)}</p>
-            <CategoryPieChart/>
+            <CategoryBarChart/>
             <p>Percentage of income spent: {investmentPercentage.toFixed(2)}%</p>
             <p>Remaining income after investments: ${remainingIncome.toFixed(2)}</p>
         </div>
