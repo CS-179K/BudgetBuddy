@@ -34,7 +34,7 @@ const Home = () => {
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
-        if (view === 'budgets' || view === 'incomes' || view === 'statements') {
+        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary') {
             setActiveViewInvestment('neither');
         }
     };
