@@ -18,6 +18,7 @@ import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
 import StatementUpload from '../components/StatementUpload';
+import SpendingSummary from '../components/SpendingSummary';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 
@@ -80,7 +81,16 @@ const Home = () => {
                         </div>  
                         <StatementUpload />
                     </div>
-                )
+                );
+            case 'spendingSummary':
+                return (
+                    <div className="home">
+                        <div>
+                            <h2>Spending Summary</h2>
+                            <SpendingSummary />
+                        </div>  
+                    </div>
+                );
             default:
                 return (
                     <div className="home">

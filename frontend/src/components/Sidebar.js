@@ -8,6 +8,7 @@ const Sidebar = ({ setActiveView }) => (
       <li className = "sidebar"><button onClick={() => setActiveView('budgets')}>Budgets</button></li>
       <li className = "sidebar"><button onClick={() => setActiveView('incomes')}>Incomes</button></li>
       <li className = "sidebar"><button onClick={() => setActiveView('statements')}>Statements</button></li>
+      <li className = "sidebar"><button onClick={() => setActiveView('spendingSummary')}>Spending Summary</button></li>
     </ul>
   </nav>
 );
