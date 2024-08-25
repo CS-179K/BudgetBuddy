@@ -18,8 +18,10 @@ import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
 import StatementUpload from '../components/StatementUpload';
+import SpendingSummary from '../components/SpendingSummary';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
+import BudgetDiffChart from '../components/BudgetDiffChart';
 
 const Home = () => {
     const [activeView, setActiveView] = useState('investments');
@@ -32,7 +34,7 @@ const Home = () => {
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
-        if (view === 'budgets' || view === 'incomes' || view === 'statements') {
+        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary') {
             setActiveViewInvestment('neither');
         }
     };
@@ -50,6 +52,7 @@ const Home = () => {
                     <div className="home">
                         <div className="budgets">
                             <h2>Budget</h2>
+                            <BudgetDiffChart />
                             {budgets && budgets.map((budget) => (
                                 <BudgetDetails key={budget._id} budget={budget} />
                             ))}
@@ -80,7 +83,16 @@ const Home = () => {
                         </div>  
                         <StatementUpload />
                     </div>
-                )
+                );
+            case 'spendingSummary':
+                return (
+                    <div className="home">
+                        <div>
+                            <h2>Spending Summary</h2>
+                            <SpendingSummary />
+                        </div>  
+                    </div>
+                );
             default:
                 return (
                     <div className="home">
