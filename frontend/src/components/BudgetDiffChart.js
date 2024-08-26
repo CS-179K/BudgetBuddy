@@ -11,12 +11,12 @@ const BudgetDiffChart = () => {
     const totalInvestment = investments.reduce((total, investment) => total + investment.amount, 0);
 
     const oldData = [
-        ['Category', 'Amount'],
+        ['Category', 'Investment'],
         ['Total Budget', totalBudget]
     ];
 
     const newData = [
-        ['Category', 'Amount'],
+        ['Category', 'Investment'],
         ['Total Investment', totalInvestment]
     ];
 
@@ -25,7 +25,11 @@ const BudgetDiffChart = () => {
         backgroundColor: 'transparent',
         legend: { position: 'left' },
         isStacked: true,
-        colors: totalInvestment > totalBudget ? ['red'] : ['green']
+        colors: totalInvestment > totalBudget ? ['red'] : ['green'],
+        legend: {
+            position: 'top',
+            textStyle: { fontSize: 15 } 
+        }
     };
 
     return (
