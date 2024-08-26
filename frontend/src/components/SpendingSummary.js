@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext';
 import { useIncomesContext } from '../hooks/useIncomesContext';
 import CategoryBarChart from './CategoryBarChart';
@@ -6,11 +6,23 @@ import './InvestmentForm.css';
 
 const SpendingSummary = () => {
     const { investments } = useInvestmentsContext();
+    const [selectedMonth, setSelectedMonth] = useState('');
     const { incomes } = useIncomesContext();
 
+    const handleMonthChange = (e) => {
+        setSelectedMonth(e.target.value);
+    };
+    
+    // Get the total amount of investments
     const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
+    
+    // Get the income total
     const totalIncomeValue = incomes.reduce((total, income) => total + income.amount, 0);
+
+    // Subtracted amount of investments from total income
     const remainingIncome = totalIncomeValue - totalInvestmentValue;
+
+    // Calculate the percentage of income spent on investments if nonnegative
     const investmentPercentage = totalIncomeValue > 0 ? (totalInvestmentValue / totalIncomeValue) * 100 : 0;
 
     return (
@@ -18,7 +30,7 @@ const SpendingSummary = () => {
             <p>Total monthly investments: ${totalInvestmentValue.toFixed(2)}</p>
             <form className="create">
                 <label>Month:</label>
-                <select>
+                <select value={selectedMonth} onChange={handleMonthChange}>
                     <option value=""></option>
                     <option value="january">January</option>
                     <option value="february">February</option>
@@ -34,7 +46,9 @@ const SpendingSummary = () => {
                     <option value="december">December</option>
                 </select>
             </form>
-            <CategoryBarChart/>
+            {/* Pass the selected month to use */}
+            <CategoryBarChart selectedMonth={selectedMonth} />
+            <label><strong>Year:</strong></label>
             <p>Percentage of income spent: {investmentPercentage.toFixed(2)}%</p>
             <p>Remaining income after investments: ${remainingIncome.toFixed(2)}</p>
         </div>

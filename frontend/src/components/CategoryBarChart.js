@@ -2,39 +2,50 @@ import React from 'react';
 import { Chart } from 'react-google-charts';
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext';
 
-const CategoryBarChart = () => {
+const CategoryBarChart = ({ selectedMonth }) => {
     const { investments } = useInvestmentsContext();
 
-    const investmentTypeTotals = investments.reduce((acc, investment) => {
+    const filteredInvestments = investments.filter(investment => { // Iterates through the investments
+        const investmentDate = new Date(investment.createdAt); // Use Date() and the createdAt field from the investment object
+        const investmentMonth = investmentDate.toLocaleString('default', { month: 'long' }).toLowerCase(); // Turn into string and lowercase
+        return investmentMonth === selectedMonth; // Turned into lowercase to check against the optionvalue
+    });
+
+    const investmentTypeTotals = filteredInvestments.reduce((acc, investment) => {
         const { investmentType, amount } = investment;
-        if (!acc[investmentType]) {
-            acc[investmentType] = 0;
+        if (!acc[investmentType]) { // Check if the investment type is not in the acc array
+            acc[investmentType] = 0; 
         }
-        acc[investmentType] += amount;
+        acc[investmentType] += amount; // Sums up for each investment type
         return acc;
     }, {});
 
     const data = [
-        ['Investment Type', 'Amount', { role: 'tooltip', type: 'string' }],
-        ...Object.entries(investmentTypeTotals).map(([type, amount]) => [type, amount, `Type: ${type}\nAmount: $${amount}`])
+        ['Investment Type', 'Amount'],
+        ...Object.entries(investmentTypeTotals).map(([type, amount]) => [type, Number(amount)]) // Maps through investmentTypeTotals
     ];
 
     const options = {
         title: 'Spending By Type',
         backgroundColor: 'transparent',
         legend: { position: 'left' },
-        is3D: false,
+        hAxis: { title: 'Amount' },
+        vAxis: { title: 'Investment Type' },
     };
 
     return (
         <div>
-            <Chart
-                chartType="BarChart"
-                data={data}
-                options={options}
-                width="100%"
-                height="100%"
-            />
+            {data.length > 1 ? (
+                <Chart
+                    chartType="BarChart"
+                    data={data}
+                    options={options}
+                    width="100%"
+                    height="400px"
+                />
+            ) : (
+                <p>Nothing spent for the selected month.</p>
+            )}
         </div>
     );
 };
