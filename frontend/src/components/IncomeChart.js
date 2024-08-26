@@ -16,9 +16,18 @@ const IncomePieChart = ({ selectedMonth }) => {
         return incomeMonth === capitalizeFirstLetter(selectedMonth); // Condition to return 
     });
 
+    const incomeTypeTotals = filteredIncomes.reduce((acc, income) => {
+        const { incomeType, amount } = income;
+        if (!acc[incomeType]) {
+            acc[incomeType] = 0;
+        }
+        acc[incomeType] += amount;
+        return acc;
+    }, {});
+
     const data = [
         ['Income Type', 'Amount'],
-        ...filteredIncomes.map(income => [income.incomeType, income.amount])
+        ...Object.entries(incomeTypeTotals).map(([type, amount]) => [type, Number(amount)])
     ];
 
     const options = {
