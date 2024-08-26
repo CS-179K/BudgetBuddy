@@ -22,6 +22,7 @@ import SpendingSummary from '../components/SpendingSummary';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 import BudgetDiffChart from '../components/BudgetDiffChart';
+import IncomePieChart from '../components/IncomeChart';
 
 const Home = () => {
     const [activeView, setActiveView] = useState('investments');
@@ -65,6 +66,7 @@ const Home = () => {
                     <div className="home">
                         <div className="incomes">
                             <h2>Income</h2>
+                            <IncomePieChart />
                             {incomes && incomes.map((income) => (
                                 <IncomeDetails key={income._id} income={income} />
                             ))}
