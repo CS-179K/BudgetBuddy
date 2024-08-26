@@ -2,12 +2,18 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useInvestmentsContext } from '../hooks/useInvestmentsContext'
 
-const InvestmentPieChart = () => {
+const InvestmentPieChart = ({ selectedMonth }) => {
     const { investments } = useInvestmentsContext()
+
+    const filteredInvestments = investments.filter(investment => { // Iterates through the investments
+        const investmentDate = new Date(investment.createdAt); // Use Date() and the createdAt field from the investment object
+        const investmentMonth = investmentDate.toLocaleString('default', { month: 'long' }).toLowerCase(); // Turn into string and lowercase
+        return investmentMonth === selectedMonth; // Turned into lowercase to check against the optionvalue
+    });
 
     const data = [
         ['Investment', 'Amount', { role: 'tooltip', type: 'string' }],
-        ...(investments ? investments.map(investment => [investment.title, investment.amount, `Investment: ${investment.title}\nAmount: $${investment.amount}`]) : [])
+        ...(filteredInvestments ? filteredInvestments.map(investment => [investment.title, investment.amount, `Investment: ${investment.title}\nAmount: $${investment.amount}`]) : [])
     ];
 
     const options = {

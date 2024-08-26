@@ -13,7 +13,7 @@ const SpendingSummary = () => {
         const investmentDate = new Date(investment.createdAt);
         const investmentMonth = investmentDate.toLocaleString('default', { month: 'long' }).toLowerCase();
         return investmentMonth === selectedMonth;
-      });
+    });
 
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
