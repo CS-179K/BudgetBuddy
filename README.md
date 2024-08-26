@@ -110,8 +110,6 @@ Backend
 - Node.js is an efficient and scalable platform for building server-side applications. It handles server-side logic, business operations, and database interactions. The asynchronous nature of Node.js will support high throughput and fast response times.
 - Forms and file systems are integrated and tested through User Input, MongoDB, and Express.js.
 
-![image](https://github.com/user-attachments/assets/83f2e669-8640-4892-8956-0c8cb15d84e0)
-
 ## Techniques
 Tools.
 - VSCode.
