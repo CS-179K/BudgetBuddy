@@ -10,6 +10,10 @@ const getInvestments = async (req, res) => {
     res.status(200).json(investments)
 }
 
+const getNotifications = async (req, res) => {
+
+}
+
 // Get a single investment
 const getInvestment = async (req, res) => {
     const { id } = req.params
