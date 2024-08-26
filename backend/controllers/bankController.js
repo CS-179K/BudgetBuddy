@@ -42,9 +42,19 @@ const isValidAmount = (amount) => /^-\d+(\.\d{0,2})?$/.test(amount);
 const isValidDate = (date) => /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(date);
 
 const columnMappings = {
-    'date': ['date', 'transaction_date', 'Date', 'Posting Date', /^\d{1,2}\/\d{1,2}\/\d{2,4}$/],
-    'description': ['description', 'details', 'Notes', 'Description', /^.{20,}$/],
-    'amount': ['amount', 'value', 'Amount', /^-?\d+(\.\d{0,2})?$/]
+    'date':         ['date', 'Date',
+                    'transaction date', 'Transaction Date',
+                    'posting date', 'Posting Date',
+                    /^\d{1,2}\/\d{1,2}\/\d{2,4}$/],
+
+    'description':  ['description', 'Description',
+                    'details', 'Details', 
+                    'notes', 'Notes',
+                     /^.{20,}$/],
+
+    'amount':       ['amount', 'Amount', 
+                    'value', 'Value',
+                    /^-?\d+(\.\d{0,2})?$/]
 };
 
 const inferColumnTypes = (headers, row) => {
