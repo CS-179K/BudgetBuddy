@@ -1,4 +1,3 @@
-// StatementUpload.js
 import { useState } from "react";
 import { useBanksContext } from "../hooks/useBanksContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -16,21 +15,19 @@ const StatementUpload = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
         if (!user) {
             setError('You must be logged in');
             return;
         }
-
+        
         if (!selectedFile) {
             setError('Please select a file to upload');
             return;
         }
-
+        
         const formData = new FormData();
         formData.append('file', selectedFile);
-
+        
         try {
             const response = await fetch('/banks/upload/', {
                 method: 'POST',
@@ -40,19 +37,25 @@ const StatementUpload = () => {
                 }
             });
 
+            if (!response.ok) {
+                const errorText = await response.text();  // Get error text if available
+                setError(`Failed to upload file: ${errorText}`);
+                return;
+            }
+        
             const json = await response.json();
 
-            if (response.ok) {
+            if (json.error) {
+                setError(json.error);
+            } else {
                 console.log('New File Added', json);
                 fileDispatch({ type: 'CREATE_FILE', payload: json });
                 setError(null);
-            } else {
-                setError(json.error || 'Failed to upload file');
             }
         } catch (err) {
-            setError('An error occurred while uploading the file');
+            setError('An error occurred while uploading: ' + err.message);
         }
-    };
+    };        
 
     return (
         <form className="upload-form" onSubmit={handleSubmit}>
@@ -66,7 +69,7 @@ const StatementUpload = () => {
                 className={error ? 'error' : ''}
             />
 
-            <button>Upload</button>
+            <button type="submit">Upload</button>
 
             {error && <div className="error-message">{error}</div>}
         </form>

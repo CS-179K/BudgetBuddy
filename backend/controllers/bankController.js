@@ -89,7 +89,7 @@ const getColumnMapping = (headers) => {
 
 const uploadFile = async (req, res) => {
     if (!req.file) {
-        return res.status(400).send('No File Uploaded');
+        return res.status(400).json({ error: 'No File Uploaded' });
     }
 
     const user_id = req.user._id;
@@ -194,11 +194,11 @@ const uploadFile = async (req, res) => {
         })
         .on('end', () => {
             Bank.insertMany(file)
-                .then(() => res.status(200).send('CSV data imported successfully'))
-                .catch((error) => res.status(500).send('Error importing CSV data: ' + error.message));
+                .then(() => res.status(200).json({ message: 'CSV data imported successfully' }))
+                .catch((error) => res.status(500).json({ error: 'Error importing CSV data: ' + error.message }));
         })
         .on('error', (error) => {
-            res.status(500).send('Error reading file: ' + error.message);
+            res.status(500).json({ error: 'Error reading file: ' + error.message });
         });
 };
 
