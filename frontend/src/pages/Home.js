@@ -197,7 +197,7 @@ const Home = () => {
                                 </select>
                             </form>
 
-                            <IncomePieChart selectedMonth = {selectedMonth}/>
+                            <IncomePieChart selectedMonth = {selectedMonthStatements}/>
                             {filteredIncomes && filteredIncomes.length > 0 ? (
                                 filteredIncomes.map((income) => (
                                     <IncomeDetails key={income._id} income={income} />
