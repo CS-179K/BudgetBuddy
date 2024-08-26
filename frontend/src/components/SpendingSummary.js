@@ -9,12 +9,18 @@ const SpendingSummary = () => {
     const [selectedMonth, setSelectedMonth] = useState('');
     const { incomes } = useIncomesContext();
 
+    const filteredInvestments = investments.filter(investment => {
+        const investmentDate = new Date(investment.createdAt);
+        const investmentMonth = investmentDate.toLocaleString('default', { month: 'long' }).toLowerCase();
+        return investmentMonth === selectedMonth;
+    });
+
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
     };
-    
+
     // Get the total amount of investments
-    const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
+    const totalInvestmentValue = filteredInvestments.reduce((total, investment) => total + investment.amount, 0);
     
     // Get the income total
     const totalIncomeValue = incomes.reduce((total, income) => total + income.amount, 0);

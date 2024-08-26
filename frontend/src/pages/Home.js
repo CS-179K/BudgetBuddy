@@ -22,15 +22,39 @@ import SpendingSummary from '../components/SpendingSummary';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 import BudgetDiffChart from '../components/BudgetDiffChart';
+import IncomePieChart from '../components/IncomeChart';
 
 const Home = () => {
     const [activeView, setActiveView] = useState('investments');
     const [activeViewInvestment, setActiveViewInvestment] = useState('neither');
+    const [selectedMonth, setSelectedMonth] = useState('');
+    const [totalInvestmentValue, setTotalInvestmentValue] = useState(0);
+    const [filteredInvestments, setFilteredInvestments] = useState([]);
     const { investments, dispatch } = useInvestmentsContext();
     const { budgets, budgetDispatch } = useBudgetsContext();
     const { incomes, incomeDispatch } = useIncomesContext();
     const { files, fileDispatch } = useBanksContext();
     const { user } = useAuthContext();
+
+    //Filters investments by month
+    useEffect(() => {
+        if (investments && Array.isArray(investments)) {
+            const filtered = investments.filter(investment => {
+                const investmentDate = new Date(investment.createdAt);
+                const investmentMonth = investmentDate.toLocaleString('default', { month: 'long' }).toLowerCase();
+                return investmentMonth === selectedMonth;
+            });
+    
+            setFilteredInvestments(filtered);
+    
+            const totalValue = filtered.reduce((total, investment) => total + investment.amount, 0);
+            setTotalInvestmentValue(totalValue);
+        }
+    }, [investments, selectedMonth]);
+
+    const handleMonthChange = (e) => {
+        setSelectedMonth(e.target.value);
+    };
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
@@ -65,6 +89,7 @@ const Home = () => {
                     <div className="home">
                         <div className="incomes">
                             <h2>Income</h2>
+                            <IncomePieChart />
                             {incomes && incomes.map((income) => (
                                 <IncomeDetails key={income._id} income={income} />
                             ))}
@@ -108,12 +133,34 @@ const Home = () => {
                     <div className="home">
                         <div className="investments">
                             <h2>Investments</h2>
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonth} onChange={handleMonthChange}>
+                                    <option value=""></option>
+                                    <option value="january">January</option>
+                                    <option value="february">February</option>
+                                    <option value="march">March</option>
+                                    <option value="april">April</option>
+                                    <option value="may">May</option>
+                                    <option value="june">June</option>
+                                    <option value="july">July</option>
+                                    <option value="august">August</option>
+                                    <option value="september">September</option>
+                                    <option value="october">October</option>
+                                    <option value="november">November</option>
+                                    <option value="december">December</option>
+                                </select>
+                            </form>
                             <div className="chart-container">
-                                <InvestmentPieChart />
+                                <InvestmentPieChart selectedMonth={selectedMonth}/>
                             </div>
-                            {investments && investments.map((investment) => (
-                                <InvestmentDetails key={investment._id} investment={investment} />
-                            ))}
+                            {filteredInvestments && filteredInvestments.length > 0 ? (
+                                filteredInvestments.map((investment) => (
+                                    <InvestmentDetails key={investment._id} investment={investment} />
+                                ))
+                            ) : (
+                                <p>No investments for the selected month.</p>
+                            )}
                             <h3>Total Investment Value: ${totalInvestmentValue.toFixed(2)}</h3>
                         </div>
                     </div>
@@ -215,10 +262,6 @@ const Home = () => {
             fetchFiles();
         }
     }, [fileDispatch, user]);
-
-    const totalInvestmentValue = investments
-        ? investments.reduce((total, investment) => total + investment.amount, 0)
-        : 0;
 
     const totalBudgetValue = budgets
         ? budgets.reduce((total, budget) => total + budget.amount, 0)
