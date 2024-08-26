@@ -133,5 +133,9 @@ Database.
 
 ![Budget Buddy Final Schema](https://github.com/user-attachments/assets/6d1ba226-f101-40e5-8b5c-e54ab1d4e1bb)
 
+## Final Burndown 
+
+![image](https://github.com/user-attachments/assets/58fda103-1f6a-45a4-b2b1-f3710eb8a311)
+
 
 
