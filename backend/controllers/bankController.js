@@ -37,13 +37,13 @@ const getFile = async (req, res) => {
     res.status(200).json(file)
 }
 
-const isValidDescription = (description) => description && description.length >= 20;
+const isValidDescription = (description) => description && description.length > 20;
 const isValidAmount = (amount) => /^-\d+(\.\d{0,2})?$/.test(amount);
 const isValidDate = (date) => /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(date);
 
 const columnMappings = {
-    'date': ['date', 'transaction_date', 'Date', 'Posting_Date', /^\d{1,2}\/\d{1,2}\/\d{2,4}$/],
-    'description': ['description', 'details', 'Notes', /^(?=.*[a-z])(?=.*[A-Z])(?=.*\s).{20,}$/],
+    'date': ['date', 'transaction_date', 'Date', 'Posting Date', /^\d{1,2}\/\d{1,2}\/\d{2,4}$/],
+    'description': ['description', 'details', 'Notes', 'Description', /^.{20,}$/],
     'amount': ['amount', 'value', 'Amount', /^-?\d+(\.\d{0,2})?$/]
 };
 

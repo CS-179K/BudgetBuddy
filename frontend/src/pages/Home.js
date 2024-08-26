@@ -31,8 +31,12 @@ const Home = () => {
     const [selectedMonthStatements, setSelectedMonthStatements] = useState('{select month}');
     const [totalInvestmentValue, setTotalInvestmentValue] = useState(0);
     const [totalStatementValue, setTotalStatementValue] = useState(0);
+    const [totalIncomeValue, setTotalIncomeValue] = useState(0);
+    const [totalBudgetValue, setTotalBudgetValue] = useState(0);
     const [filteredInvestments, setFilteredInvestments] = useState([]);
     const [filteredFiles, setFilteredFiles] = useState([]);
+    const [filteredBudgets, setFilteredBudgets] = useState([]);
+    const [filteredIncomes, setFilteredIncomes] = useState([]);
     const { investments, dispatch } = useInvestmentsContext();
     const { budgets, budgetDispatch } = useBudgetsContext();
     const { incomes, incomeDispatch } = useIncomesContext();
@@ -76,6 +80,38 @@ const Home = () => {
         }
     }, [files, selectedMonthStatements]);
 
+    //Filters incomes by month
+    useEffect(() => {
+        if (incomes && Array.isArray(incomes)) {
+            const filteredIncomes = incomes.filter(income => {
+                const incomeDate = new Date(income.createdAt);
+                const incomeMonth = capitalizeFirstLetter(incomeDate.toLocaleString('default', { month: 'long' }));
+                return incomeMonth === capitalizeFirstLetter(selectedMonthStatements);
+            });
+    
+            setFilteredIncomes(filteredIncomes);
+    
+            const totalValue = filteredIncomes.reduce((total, income) => total + income.amount, 0);
+            setTotalIncomeValue(totalValue);
+        }
+    }, [incomes, selectedMonthStatements]);
+
+    // Filters budgets by month
+    useEffect(() => {
+        if (budgets && Array.isArray(budgets)) {
+            const filteredBudgets = budgets.filter(budget => {
+                const budgetDate = new Date(budget.createdAt);
+                const budgetMonth = capitalizeFirstLetter(budgetDate.toLocaleString('default', { month: 'long' }));
+                return budgetMonth === capitalizeFirstLetter(selectedMonth);
+            });
+    
+            setFilteredBudgets(filteredBudgets);
+    
+            const totalValue = filteredBudgets.reduce((total, budget) => total + budget.amount, 0);
+            setTotalBudgetValue(totalValue);
+        }
+    }, [budgets, selectedMonth]);
+
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
     };
@@ -104,10 +140,34 @@ const Home = () => {
                     <div className="home">
                         <div className="budgets">
                             <h2>Budget</h2>
-                            <BudgetDiffChart />
-                            {budgets && budgets.map((budget) => (
-                                <BudgetDetails key={budget._id} budget={budget} />
-                            ))}
+
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonth} onChange={handleMonthChange}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
+
+                            <BudgetDiffChart selectedMonth = {selectedMonth} />
+                            {filteredBudgets && filteredBudgets.length > 0 ? (
+                                filteredBudgets.map((budget) => (
+                                    <BudgetDetails key={budget._id} budget={budget} />
+                                ))
+                            ) : (
+                                <p>No budgets for the selected month.</p>
+                            )}
                         </div>
                         <BudgetForm />
                     </div>
@@ -117,10 +177,34 @@ const Home = () => {
                     <div className="home">
                         <div className="incomes">
                             <h2>Income</h2>
-                            <IncomePieChart />
-                            {incomes && incomes.map((income) => (
-                                <IncomeDetails key={income._id} income={income} />
-                            ))}
+
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonthStatements} onChange={handleMonthChangeStatements}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
+
+                            <IncomePieChart selectedMonth = {selectedMonth}/>
+                            {filteredIncomes && filteredIncomes.length > 0 ? (
+                                filteredIncomes.map((income) => (
+                                    <IncomeDetails key={income._id} income={income} />
+                                ))
+                            ) : (
+                                <p>No incomes for the selected month.</p>
+                            )}
                         </div>
                         <IncomeForm />
                     </div>
@@ -155,7 +239,7 @@ const Home = () => {
                                     <StatementDetails key={file._id} file={file} />
                                 ))
                             ) : (
-                                <p>No investments for the selected month.</p>
+                                <p>No statements for the selected month.</p>
                             )}
                         </div>  
                         <StatementUpload />
@@ -315,23 +399,15 @@ const Home = () => {
         }
     }, [fileDispatch, user]);
 
-    const totalBudgetValue = budgets
-        ? budgets.reduce((total, budget) => total + budget.amount, 0)
-        : 0;
-
-    const totalIncomeValue = incomes
-        ? incomes.reduce((total, income) => total + income.amount, 0)
-        : 0;
-
     return (
         <div>
             <Sidebar setActiveView={handleSetActiveView} />
             <div style={{ flex: 1, padding: '15px' }}>
                 <h1>Account Summary</h1>
                 <p>Your income is currently ${totalIncomeValue} and you spent ${totalStatementValue.toFixed(2)} in {selectedMonthStatements}.</p>
-                <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} this month.</p>
+                <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} in {selectedMonthStatements}.</p>
                 <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} in {selectedMonth}.</p>
-                <p>You plan to save ${totalBudgetValue - totalInvestmentValue} this month.</p>
+                <p>You plan to save ${totalBudgetValue - totalInvestmentValue} in {selectedMonth}.</p>
             </div>
             {renderView()}
             {renderViewInvestment()}
