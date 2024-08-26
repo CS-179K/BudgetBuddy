@@ -131,38 +131,9 @@ Backend.
 Database.
 - MongoDB.
 
-## Week 1 Burndown Chart
+## Final MongoDB Schema
 
-![Burndown Chart](https://github.com/user-attachments/assets/8f2bd26e-f784-4939-a3d5-3c8d8f672bc1)
-
-## Week 2 Wireframe
-
-![BudgetBuddy](https://github.com/user-attachments/assets/ecad76fb-b135-4e10-a2de-7cb614b35c30)
-
-## Week 2 MongoDB Schema
-
-![image](https://github.com/user-attachments/assets/ef7b556f-a1e6-4cec-b948-36743991fdda)
-
-## Week 3 Burndown Chart Sprint 1
-
-<img width="895" alt="Screenshot 2024-08-12 at 9 32 38 AM" src="https://github.com/user-attachments/assets/a1ee4cd8-e30f-4551-9e3b-91d7ad27d614">
-
-## Week 3 Sprint 2 Wireframe
-
-<img width="931" alt="Screenshot 2024-08-12 at 3 28 11 PM" src="https://github.com/user-attachments/assets/e63c1d37-2d7c-4034-97d2-1f66c92718a6">
-
-## Week 3 Sprint 2 Schema and Architecture
-
-![CS179K BudgetBuddy](https://github.com/user-attachments/assets/afae1ae9-7c96-470a-bb11-458f4a8e94a5)
-
-## Week 4 Sprint 2 Schema and Architecture
-
-<img width="903" alt="Screenshot 2024-08-19 at 9 56 39 AM" src="https://github.com/user-attachments/assets/59cca289-34ca-49e6-a74f-52d70720dc3a">
-
-## Week 4 Sprint 3 Wireframe
-
-<img width="823" alt="Screenshot 2024-08-19 at 12 36 10 PM" src="https://github.com/user-attachments/assets/72b98b54-b6dc-4300-b6d4-2fab5d8c9336">
-
+![Budget Buddy Final Schema](https://github.com/user-attachments/assets/6d1ba226-f101-40e5-8b5c-e54ab1d4e1bb)
 
 
 
