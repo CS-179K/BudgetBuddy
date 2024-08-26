@@ -25,7 +25,6 @@ router.get('/github/login', async ctx => {
 router.get('/github/callback', async ctx => {
     console.log('callback...')
 
-    // 服务器认证成功，回调带回认证状态code
     const code = ctx.query.code
     const params = {
         client_id: config.client_id,
@@ -33,7 +32,6 @@ router.get('/github/callback', async ctx => {
         code: code
     }
 
-    // 申请令牌token
     let res = await axios.post('https://github.com/login/oauth/access_token', params)
     const access_token = querystring.parse(res.data).access_token
 
@@ -43,7 +41,6 @@ router.get('/github/callback', async ctx => {
         }
     })
 
-    // 渲染页面
     ctx.body = `
     <h1>Hello ${res.data.login}</h1>
     <img src="${res.data.avatar_url}" alt="">
