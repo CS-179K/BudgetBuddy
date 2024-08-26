@@ -5,13 +5,13 @@ const mongoose = require('mongoose')
 const getNotifications = async (req, res) => {
     const user_id = req.user._id
 
-    const investments = await Notification.find({ user_id }).sort({createdAt: -1})
+    const notification = await Notification.find({ user_id }).sort({createdAt: -1})
 
-    res.status(200).json(investments)
+    res.status(200).json(notification)
 }
 
 
-// Get a single investment
+// Get a single notification
 const getNotification = async (req, res) => {
     const { id } = req.params
 
@@ -19,13 +19,13 @@ const getNotification = async (req, res) => {
         return res.status(404).json({error: 'No such notification'})
     }
 
-    const investment = await Investment.findById(id)
+    const notification = await Notification.findById(id)
 
-    if (!investment) {
+    if (!notification) {
         return res.status(404).json({error: 'No such notification'})
     }
 
-    res.status(200).json(investment)
+    res.status(200).json(notification)
 }
 
 
@@ -33,7 +33,7 @@ const addNotification = async (req, res) => {
     try {
         const { user_id, message } = req.body;
 
-        // Generate a unique ID for the notification (or use a library to handle this)
+        // Generate a unique ID for the notification
         const _id = new mongoose.Types.ObjectId().toString();
 
         const newNotification = new Notification({
