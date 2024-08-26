@@ -27,7 +27,31 @@ const getNotification = async (req, res) => {
 
     res.status(200).json(investment)
 }
+
+
+const addNotification = async (req, res) => {
+    try {
+        const { user_id, message } = req.body;
+
+        // Generate a unique ID for the notification (or use a library to handle this)
+        const _id = new mongoose.Types.ObjectId().toString();
+
+        const newNotification = new Notification({
+            _id,
+            user_id,
+            message
+        });
+
+        await newNotification.save();
+
+        res.status(200).json({ message: 'Notification added successfully', notification: newNotification });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to add notification', error: error.message });
+    }
+};
+
 module.exports = {
     getNotifications,
     getNotification,
+    addNotification
 }
