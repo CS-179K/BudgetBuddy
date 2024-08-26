@@ -23,7 +23,6 @@ const BudgetDiffChart = () => {
     const options = {
         title: 'Budget vs Investment',
         backgroundColor: 'transparent',
-        legend: { position: 'left' },
         isStacked: true,
         colors: totalInvestment > totalBudget ? ['red'] : ['green'],
         legend: {

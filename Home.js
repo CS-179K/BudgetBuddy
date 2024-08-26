@@ -7,9 +7,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 // BudgetBuddy Components
 import Sidebar from '../components/Sidebar';
-
 import ToggleInvestmentForm from '../components/ToggleInvestmentForm';
-
 import InvestmentDetails from '../components/InvestmentDetails';
 import InvestmentForm from '../components/InvestmentForm';
 import BudgetDetails from '../components/BudgetDetails';
@@ -18,11 +16,15 @@ import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
 import StatementUpload from '../components/StatementUpload';
+import SpendingSummary from '../components/SpendingSummary';
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
+import BudgetDiffChart from '../components/BudgetDiffChart';
 
-import Notification from '../components/Notification';
-import Modal from '../components/Modal';
+import Notification from '../components/Notifications';
+import Modal from '../components/Modal';  
+
+
 
 const Home = () => {
     const [activeView, setActiveView] = useState('investments');
@@ -36,7 +38,125 @@ const Home = () => {
     const [notifications, setNotifications] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
+    const [lastPercentageUsed, setLastPercentageUsed] = useState(null);
+    const [generateNotifications, setGenerateNotifications] = useState(null);
 
+    // Dismiss notification function
+    const dismissNotification = (id) => {
+        setNotifications(notifications.filter(notif => notif.id !== id));
+    };
+
+    // Fetch Investments
+    const fetchInvestments = async () => {
+        const response = await fetch('/api/investments', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
+        const json = await response.json();
+        if (response.ok) {
+            dispatch({ type: 'SET_INVESTMENTS', payload: json });
+        }
+    };
+
+    // Fetch Budgets
+    const fetchBudgets = async () => {
+        const response = await fetch('/api/budgets', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
+        const json = await response.json();
+        if (response.ok) {
+            budgetDispatch({ type: 'SET_BUDGETS', payload: json });
+        }
+    };
+
+    // Fetch Incomes
+    const fetchIncomes = async () => {
+        const response = await fetch('api/incomes', {
+            headers: {
+                'Authorization' : `Bearer ${user.token}`
+            }
+        });
+        const json = await response.json();
+        if (response.ok) {
+            incomeDispatch({ type: 'SET_INCOMES', payload: json});
+        }
+    };
+
+    // Fetch Files
+    const fetchFiles = async () => {
+        const response = await fetch('banks/upload', {
+            headers: {
+                'Authorization' : `Bearer ${user.token}`
+            }
+        });
+        const json = await response.json();
+        if (response.ok) {
+            fileDispatch({ type: 'SET_FILES', payload: json });
+        }
+    };
+
+    useEffect(() => {
+        if (user) {
+            fetchInvestments();
+            fetchBudgets();
+            fetchIncomes();
+            fetchFiles();
+        }
+    }, [user]);
+
+    // Use effect to check budget usage after investments and budgets are fetched
+    useEffect(() => {
+        if (investments && budgets && investments.length > 0 && budgets.length > 0) {
+            checkBudgetUsage();
+        }
+    }, [investments, budgets]);
+
+    // Function to check budget usage and generate notifications
+    const checkBudgetUsage = () => {
+        const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
+        const totalBudgetValue = budgets.reduce((total, budget) => total + budget.amount, 0);
+        const percentageUsed = (totalInvestmentValue / totalBudgetValue) * 100;
+
+        const newNotifications = [];
+
+        if (percentageUsed >= 100 && !notifications.find(n => n.message.includes("exceeded your budget"))) {
+            newNotifications.push({ id: Date.now(), message: "Alert: You have exceeded your budget!", timestamp: new Date() });
+        } 
+        if (percentageUsed >= 75 && !notifications.find(n => n.message.includes("75% of your budget"))) {
+            newNotifications.push({ id: Date.now() + 1, message: "Caution: You have used 75% of your budget.", timestamp: new Date() });
+        }
+        if (percentageUsed >= 50 && !notifications.find(n => n.message.includes("50% of your budget"))) {
+            newNotifications.push({ id: Date.now() + 2, message: "Attention: You have used 50% of your budget.", timestamp: new Date() });
+        }
+        if (percentageUsed >= 25 && !notifications.find(n => n.message.includes("25% of your budget"))) {
+            newNotifications.push({ id: Date.now() + 3, message: "Notice: You have used 25% of your budget.", timestamp: new Date() });
+        }
+
+        if (newNotifications.length > 0) {
+            setNotifications([...notifications, ...newNotifications]);
+        }
+    };
+
+    const totalInvestmentValue = investments
+        ? investments.reduce((total, investment) => total + investment.amount, 0)
+        : 0;
+
+    const totalBudgetValue = budgets
+        ? budgets.reduce((total, budget) => total + budget.amount, 0)
+        : 0;
+
+    const totalIncomeValue = incomes
+        ? incomes.reduce((total, income) => total + income.amount, 0)
+        : 0;
+
+    const totalStatementValue = files
+        ? files.reduce((total, file) => total - file.amount, 0)
+        : 0;
+
+    // Handle view change
     const handleSetActiveView = (view) => {
         setActiveView(view);
         if (view === 'budgets' || view === 'incomes' || view === 'statements') {
@@ -57,6 +177,7 @@ const Home = () => {
                     <div className="home">
                         <div className="budgets">
                             <h2>Budget</h2>
+                            <BudgetDiffChart />
                             {budgets && budgets.map((budget) => (
                                 <BudgetDetails key={budget._id} budget={budget} />
                             ))}
@@ -87,21 +208,27 @@ const Home = () => {
                         </div>  
                         <StatementUpload />
                     </div>
-                )
-                case 'Notifications':
+                );
+                case 'spendingSummary':
                     return (
-                      <div className="home">
-                        <div className="Notifications" >
-                          <h2>Alerts</h2>
-                          <Notification notifications={notifications} onDismiss={dismissNotification} />
+                        <div className="home">
+                            <div>
+                                <h2>Spending Summary</h2>
+                                <SpendingSummary />
+                            </div>  
                         </div>
-                      </div>
-                    );            
-            default:
+                    );
+            case 'Notifications':
                 return (
                     <div className="home">
+                        <div className="Notifications">
+                            <h2>Alerts</h2>
+                            <Notification notifications={notifications} onDismiss={dismissNotification} />
+                        </div>
                     </div>
-                );
+                );            
+            default:
+                return <div className="home"></div>;
         }
     };
 
@@ -131,331 +258,89 @@ const Home = () => {
                     </div>
                 );
             case 'neither':
-                return (
-                    <div className="home">
-                    </div>
-                );
+                return <div className="home"></div>;
             default:
-                return (
-                    <div className="home">
-                    </div>
-                );
+                return <div className="home"></div>;
         }
     };
 
-    const fetchInvestments = async () => {
-        const response = await fetch('/api/investments', {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        });
-        const json = await response.json();
-        if (response.ok) {
-            dispatch({ type: 'SET_INVESTMENTS', payload: json });
-        }
-    };
 
-    useEffect(() => {
-        /*const fetchInvestments = async () => {
-            const response = await fetch('/api/investments', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
-
-            if (response.ok) {
-                dispatch({ type: 'SET_INVESTMENTS', payload: json });
-            }
-        };*/
-
-        if (user) {
-            fetchInvestments();
-        }
-    }, [dispatch, user]);
-
-    const fetchBudgets = async () => {
-        const response = await fetch('/api/budgets', {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        });
-        const json = await response.json();
-
-        if (response.ok) {
-            budgetDispatch({ type: 'SET_BUDGETS', payload: json });
-        }
-    };
-
-    useEffect(() => {
-        /*const fetchBudgets = async () => {
-            const response = await fetch('/api/budgets', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
-
-            if (response.ok) {
-                budgetDispatch({ type: 'SET_BUDGETS', payload: json });
-            }
-        }; */
-
-        if (user) {
-            fetchBudgets();
-        }
-    }, [budgetDispatch, user]);
-
-    const fetchIncomes = async () => {
-        const response = await fetch('api/incomes', {
-            headers: {
-                'Authorization' : `Bearer ${user.token}`
-            }
-        });
-        const json = await response.json();
-
-        if (response.ok) {
-            incomeDispatch({ type: 'SET_INCOMES', payload: json});
-        }
-    };
-
-    useEffect(() => {
-        /*const fetchIncomes = async () => {
-            const response = await fetch('api/incomes', {
-                headers: {
-                    'Authorization' : `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
-
-            if (response.ok) {
-                incomeDispatch({ type: 'SET_INCOMES', payload: json});
-            }
-        };*/
-
-        if (user) {
-            fetchIncomes();
-        }
-    }, [incomeDispatch, user]);
-
-    const fetchFiles = async () => {
-        const response = await fetch ('banks/upload', {
-            headers: {
-                'Authorization' : `Bearer ${user.token}`
-            }
-        });
-
-        const json = await response.json();
-
-        if (response.ok) {
-            fileDispatch({ type: 'SET_FILES', payload: json });
-        }
-    };
-
-    useEffect(() => {
-        /*const fetchFiles = async () => {
-            const response = await fetch ('banks/upload', {
-                headers: {
-                    'Authorization' : `Bearer ${user.token}`
-                }
-            });
-
-            const json = await response.json();
-
-            if (response.ok) {
-                fileDispatch({ type: 'SET_FILES', payload: json });
-            }
-        };*/
-
-        if (user) {
-            fetchFiles();
-        }
-    }, [fileDispatch, user]);
-
-    const totalInvestmentValue = investments
-        ? investments.reduce((total, investment) => total + investment.amount, 0)
-        : 0;
-
-    const totalBudgetValue = budgets
-        ? budgets.reduce((total, budget) => total + budget.amount, 0)
-        : 0;
-
-    const totalIncomeValue = incomes
-        ? incomes.reduce((total, income) => total + income.amount, 0)
-        : 0;
-
-    const totalStatementValue = files
-        ? files.reduce((total, file) => total - file.amount, 0)
-        : 0;
-
-///////////////////////////////////////////////////////////////////////////////////////
 useEffect(() => {
-    if (user) {
-      fetchInvestments();
-      fetchBudgets();
-      fetchIncomes();
-    }
-  }, [user]);
+    const dismissedIds = JSON.parse(sessionStorage.getItem('dismissedNotifications')) || [];
+    setNotifications(currentNotifications => currentNotifications.filter(notif => !dismissedIds.includes(notif.id)));
+  }, []);
   
-
-  // Ensuring data is available before attempting to reduce it
   useEffect(() => {
-    if (investments && budgets && investments.length > 0 && budgets.length > 0) {
-      checkBudgetUsage();
+    if (investments && budgets) {
+        const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
+        const totalBudgetValue = budgets.reduce((total, budget) => total + budget.amount, 0);
+        const percentageUsed = (totalInvestmentValue / totalBudgetValue) * 100;
+
+        console.log(`Percentage Used: ${percentageUsed}, Last Percentage Used: ${lastPercentageUsed}`);
+
+        if (percentageUsed !== lastPercentageUsed) {
+            console.log("Percentage has changed, updating...");
+            setLastPercentageUsed(percentageUsed); // Update the last known percentage
+            
+            if (generateNotifications) {
+                generateNotifications(percentageUsed);
+            }
+        }
     }
-  }, [investments, budgets]);
-
-  /*const fetchInvestments = async () => {
-    const response = await fetch('/api/investments', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: 'SET_INVESTMENTS', payload: json });
-    }
-  };
-
-  const fetchBudgets = async () => {
-    const response = await fetch('/api/budgets', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      budgetDispatch({ type: 'SET_BUDGETS', payload: json });
-    }
-  };
-
-  const fetchIncomes = async () => {
-    const response = await fetch('api/incomes', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      incomeDispatch({ type: 'SET_INCOMES', payload: json });
-    }
-  };*/
-
-
-
-  const checkBudgetUsage = () => {
-    const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
-    const totalBudgetValue = budgets.reduce((total, budget) => total + budget.amount, 0);
-    const percentageUsed = (totalInvestmentValue / totalBudgetValue) * 100;
-
-    const newNotifications = [];
-
-    if (percentageUsed >= 100 && !notifications.find(n => n.message.includes("exceeded your budget"))) {
-      newNotifications.push({ id: Date.now(), message: "Alert: You have exceeded your budget!", timestamp: new Date() });
-    } 
-  
-    if (percentageUsed >= 75 && !notifications.find(n => n.message.includes("75% of your budget"))) {
-      newNotifications.push({ id: Date.now() + 1, message: "Caution: You have used 75% of your budget.", timestamp: new Date() });
-    }
-  
-    if (percentageUsed >= 50 && !notifications.find(n => n.message.includes("50% of your budget"))) {
-      newNotifications.push({ id: Date.now() + 2, message: "Attention: You have used 50% of your budget.", timestamp: new Date() });
-    }
-  
-    if (percentageUsed >= 25 && !notifications.find(n => n.message.includes("25% of your budget"))) {
-      newNotifications.push({ id: Date.now() + 3, message: "Notice: You have used 25% of your budget.", timestamp: new Date() });
-    }
-
-    if (newNotifications.length > 0) {
-        setNotifications([...notifications, ...newNotifications]);
-    }
-
-  };
-
-const dismissNotification = (id) => {
-    setNotifications(notifications.filter(notif => notif.id !== id));
-};
-
-// local Storage
-
-/*useEffect(() => {
-  const dismissedIds = JSON.parse(localStorage.getItem('dismissedNotifications')) || [];
-  setNotifications(currentNotifications => currentNotifications.filter(notif => !dismissedIds.includes(notif.id)));
-}, []);
-
-const dismissNotification = (id) => {
-setNotifications(currentNotifications => {
-    const updatedNotifications = currentNotifications.filter(notif => notif.id !== id);
-    const dismissedIds = updatedNotifications.map(notif => notif.id).concat(id);
-    localStorage.setItem('dismissedNotifications', JSON.stringify(dismissedIds));
-    return updatedNotifications;
-});
-};*/
-
-// session storage
-
-/*const dismissNotification = (id) => {
-setNotifications(currentNotifications => {
-    const updatedNotifications = currentNotifications.filter(notif => notif.id !== id);
-    const dismissedIds = updatedNotifications.map(notif => notif.id).concat(id);
-    sessionStorage.setItem('dismissedNotifications', JSON.stringify(dismissedIds));
-    return updatedNotifications;
-});
-};*/
+}, [investments, budgets, lastPercentageUsed,generateNotifications]);
 
 useEffect(() => {
-const dismissedIds = JSON.parse(sessionStorage.getItem('dismissedNotifications')) || [];
-setNotifications(currentNotifications => currentNotifications.filter(notif => !dismissedIds.includes(notif.id)));
+    const newGenerateNotifications = (percentageUsed) => {
+        if(percentageUsed === lastPercentageUsed){
+            console.log("No change in the budget percentage.");
+            setIsModalOpen(false)
+        }else if (percentageUsed >= 100) {
+            setModalContent('Alert: You have exceeded your budget!');
+            setIsModalOpen(true);
+        } else if (percentageUsed >= 75) {
+            setModalContent('Caution: You have used 75% of your budget.');
+            setIsModalOpen(true);
+        } else if (percentageUsed >= 50) {
+            setModalContent('Attention: You have used 50% of your budget.');
+            setIsModalOpen(true);
+        } else if (percentageUsed >= 25) {
+            setModalContent('Notice: You have used 25% of your budget.');
+            setIsModalOpen(true);
+        }
+        
+    };
+
+    setGenerateNotifications(() => newGenerateNotifications);
 }, []);
 
-useEffect(() => {
-if (investments && budgets) {
-  const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
-  const totalBudgetValue = budgets.reduce((total, budget) => total + budget.amount, 0);
-  const percentageUsed = (totalInvestmentValue / totalBudgetValue) * 100;
+  
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+  
+      
 
-  if (percentageUsed >= 100) {
-    setModalContent('Alert: You have exceeded your budget!');
-    setIsModalOpen(true);
-  } else if (percentageUsed >= 75) {
-    setModalContent('Caution: You have used 75% of your budget.');
-    setIsModalOpen(true);
-  } else if (percentageUsed >= 50) {
-    setModalContent('Attention: You have used 50% of your budget.');
-    setIsModalOpen(true);
-  } else if (percentageUsed >= 25) {
-    setModalContent('Notice: You have used 25% of your budget.');
-    setIsModalOpen(true);
-  }
-}
-}, [investments, budgets]);
+    return (
+        <div>
+            <Sidebar setActiveView={setActiveView} notifications={notifications} />
 
-const handleClose = () => {
-setIsModalOpen(false);
-};
+            <div style={{ flex: 1, padding: '15px' }}>
+                <h1>Account Summary</h1>
+                <p>Your income is currently ${totalIncomeValue}.</p>
+                <p>You are currently investing ${totalInvestmentValue} and your budget is ${totalBudgetValue}.</p>
+                <p>You save ${totalBudgetValue - totalInvestmentValue} if you only spend on your investments.</p>
+            </div>
 
-
-
-//<Sidebar setActiveView={handleSetActiveView} />
-return (
-  <div>
-    <Sidebar setActiveView={setActiveView} notifications={notifications} />
-
-    {renderView()}
-    <div style={{ flex: 1, padding: '15px' }}>
-      <h1>Account Summary</h1>
-      <p>Your income is currently ${totalIncomeValue}.</p>
-      <p>You are currently investing ${totalInvestmentValue} and your budget is ${totalBudgetValue}.</p>
-      <p>You save ${totalBudgetValue - totalInvestmentValue} if you only spend on your investments.</p>
-    </div>
-    {renderView()}
-    {renderViewInvestment()}
-    <Modal isOpen={isModalOpen} onClose={handleClose}>
-      <p>{modalContent}</p>
+            {renderView()}
+            {renderViewInvestment()}
+            {isModalOpen && (
+    <Modal onClose={handleClose}>
+        <p>{modalContent}</p>
     </Modal>
-  </div>
-);
-};
+)}
 
+        </div>
+    );
+};
 
 export default Home;

@@ -4,7 +4,7 @@ import { useIncomesContext } from '../hooks/useIncomesContext';
 
 const IncomePieChart = () => {
     const { incomes } = useIncomesContext();
-
+    
     const incomeTypeTotals = incomes.reduce((acc, income) => {
         const { incomeType, amount } = income;
         if (!acc[incomeType]) {
