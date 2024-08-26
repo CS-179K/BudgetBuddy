@@ -12,10 +12,10 @@ const BudgetDiffChart = ({ selectedMonth }) => {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     };
 
-    const filteredBudgets = budgets.filter(budget => { // Iterates through the investments
-        const budgetDate = new Date(budget.createdAt); // Use Date() and the createdAt field from the investment object
+    const filteredBudgets = budgets.filter(budget => { // Iterates through the budget
+        const budgetDate = new Date(budget.createdAt); // Use Date() and the createdAt field from the budget object
         const budgetMonth = capitalizeFirstLetter(budgetDate.toLocaleString('default', { month: 'long' })); // Turn into string and lowercase
-        return budgetMonth === capitalizeFirstLetter(selectedMonth); // Turned into lowercase to check against the optionvalue
+        return budgetMonth === capitalizeFirstLetter(selectedMonth); // Condition to return 
     });
 
     const filteredInvestments = investments.filter(investment => { // Iterates through the investments
