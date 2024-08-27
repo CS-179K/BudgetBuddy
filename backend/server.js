@@ -8,6 +8,7 @@ const investmentRoutes = require('./routes/investments')
 const budgetRoutes = require('./routes/budgets')
 const incomeRoutes = require('./routes/incomes')
 const bankRoutes = require('./routes/banks')
+const notificationRoutes = require('./routes/notifications')
 
 const userRoutes = require('./routes/user')
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use('/api/investments', investmentRoutes)
 app.use('/api/budgets', budgetRoutes)
 app.use('/api/incomes', incomeRoutes)
+app.use('/api/notifications', notificationRoutes)
 app.use('/api/user', userRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))

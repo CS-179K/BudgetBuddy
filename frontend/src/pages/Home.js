@@ -3,6 +3,7 @@ import { useInvestmentsContext } from "../hooks/useInvestmentsContext";
 import { useBudgetsContext } from "../hooks/useBudgetsContext";
 import { useIncomesContext } from "../hooks/useIncomesContext";
 import { useBanksContext } from "../hooks/useBanksContext";
+import { useNotificationsContext } from '../hooks/useNotificationsContext';
 import { useAuthContext } from "../hooks/useAuthContext";
 
 // BudgetBuddy Components
@@ -19,6 +20,7 @@ import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
 import StatementUpload from '../components/StatementUpload';
 import SpendingSummary from '../components/SpendingSummary';
+import NotificationDetails from '../components/Notifications'
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 import BudgetDiffChart from '../components/BudgetDiffChart';
@@ -29,18 +31,26 @@ const Home = () => {
     const [activeViewInvestment, setActiveViewInvestment] = useState('neither');
     const [selectedMonth, setSelectedMonth] = useState('{select month}');
     const [selectedMonthStatements, setSelectedMonthStatements] = useState('{select month}');
+
     const [totalInvestmentValue, setTotalInvestmentValue] = useState(0);
     const [totalStatementValue, setTotalStatementValue] = useState(0);
     const [totalIncomeValue, setTotalIncomeValue] = useState(0);
     const [totalBudgetValue, setTotalBudgetValue] = useState(0);
+
     const [filteredInvestments, setFilteredInvestments] = useState([]);
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [filteredBudgets, setFilteredBudgets] = useState([]);
     const [filteredIncomes, setFilteredIncomes] = useState([]);
+
     const { investments, dispatch } = useInvestmentsContext();
     const { budgets, budgetDispatch } = useBudgetsContext();
     const { incomes, incomeDispatch } = useIncomesContext();
     const { files, fileDispatch } = useBanksContext();
+    const { notifications, notificationDispatch } = useNotificationsContext();
+
+    const storedNotificationStatus = localStorage.getItem('hasSentNotification');
+    const hasSentNotification = storedNotificationStatus === 'true';
+
     const { user } = useAuthContext();
 
     const capitalizeFirstLetter = (string) => {
@@ -122,11 +132,11 @@ const Home = () => {
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
-        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary') {
+        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary' || view === 'notifications') {
             setActiveViewInvestment('neither');
         }
     };
-
+    
     const renderView = () => {
         switch (activeView) {
             case 'investments':
@@ -254,6 +264,16 @@ const Home = () => {
                         </div>  
                     </div>
                 );
+            case 'notifications':
+                return (
+                    <div className = "home">
+                        <div className = "investments">
+                            {notifications && notifications.map((notification) => (
+                                <NotificationDetails key={notification._id} notification={notification} />
+                            ))}
+                        </div>
+                    </div>
+                )
             default:
                 return (
                     <div className="home">
@@ -398,6 +418,58 @@ const Home = () => {
             fetchFiles();
         }
     }, [fileDispatch, user]);
+    
+    useEffect(() => {
+        const notifyIfInvestmentExceeds = async () => {
+            // Retrieve the notification status from localStorage
+            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
+                localStorage.setItem('hasSentNotification', 'false')
+            }
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
+                const notification = {
+                    message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
+                    sent: true
+                };
+
+                const response = await fetch('/api/notifications', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(notification)
+                });
+
+                const json = await response.json();
+
+                if (response.ok) {
+                    notificationDispatch({ type: 'CREATE_NOTIFICATIONS', payload: json });
+                    localStorage.setItem('hasSentNotification', 'true');
+                }
+            }
+        };
+
+        notifyIfInvestmentExceeds();
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch]);
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            const response = await fetch('/api/notifications', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                notificationDispatch({ type: 'SET_NOTIFICATIONS', payload: json });
+            }
+        };
+
+        if (user) fetchNotifications();
+    }, [notificationDispatch, user]);
 
     return (
         <div>
@@ -408,6 +480,11 @@ const Home = () => {
                 <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} in {selectedMonthStatements}.</p>
                 <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} in {selectedMonth}.</p>
                 <p>You plan to save ${totalBudgetValue - totalInvestmentValue} in {selectedMonth}.</p>
+                {hasSentNotification && (totalInvestmentValue / totalBudgetValue * 100 > 75) && (
+                    <p style={{ marginTop: '20px', padding: '10px', color: 'red'}}>
+                        Your investments are currently {(totalInvestmentValue / totalBudgetValue * 100).toFixed(2)}% of your budget.
+                    </p>
+                )}
             </div>
             {renderView()}
             {renderViewInvestment()}
