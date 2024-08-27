@@ -40,13 +40,13 @@ Expense Tracking.
 
 Budgeting.
 - As a user, I want to set a monthly budget for different categories of spending.
-- As a user, I want to receive alerts when spending reaches thresholds of 50%, 25%, and 10% of my budget.
+- As a user, I want to receive an alert when investments reaches a threshold of 75% of my budgets.
 - Points: 4.
 - Requires some complex math calculations.
 
 Saving Goals.
-- As a user, I want to create savings goals for long-term future expenses.
-- As a user, I want to track how many savings I have towards a saving goal.
+- As a user, I want to create savings goals through investments for monthly expenses.
+- As a user, I want to track how many savings I have left.
 - Points: 2.
 - Saving goals requires multiple schema already completed.
 
