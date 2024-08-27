@@ -27,10 +27,20 @@ import BudgetDiffChart from '../components/BudgetDiffChart';
 import IncomePieChart from '../components/IncomeChart';
 
 const Home = () => {
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const monthName = months[monthIndex];
+
     const [activeView, setActiveView] = useState('investments');
     const [activeViewInvestment, setActiveViewInvestment] = useState('neither');
-    const [selectedMonth, setSelectedMonth] = useState('{select month}');
-    const [selectedMonthStatements, setSelectedMonthStatements] = useState('{select month}');
+
+    const [selectedMonth, setSelectedMonth] = useState(monthName);
+    const [selectedMonthStatements, setSelectedMonthStatements] = useState(monthName);
 
     const [totalInvestmentValue, setTotalInvestmentValue] = useState(0);
     const [totalStatementValue, setTotalStatementValue] = useState(0);
@@ -443,7 +453,7 @@ const Home = () => {
                 const json = await response.json();
 
                 if (response.ok) {
-                    notificationDispatch({ type: 'CREATE_NOTIFICATIONS', payload: json });
+                    notificationDispatch({ type: 'CREATE_NOTIFICATION', payload: json });
                     localStorage.setItem('hasSentNotification', 'true');
                 }
             }

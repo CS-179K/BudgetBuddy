@@ -23,7 +23,7 @@ export const notificationsReducer = (state, action) => {
 
 export const NotificationsContextProvider = ({ children }) => {
     const [state, notificationDispatch] = useReducer(notificationsReducer, {
-        notifications: []
+        notifications: null
     })
 
     return (
