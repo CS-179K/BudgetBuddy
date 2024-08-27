@@ -460,7 +460,7 @@ const Home = () => {
         };
 
         notifyIfInvestmentExceeds();
-    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch]);
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch, hasSentNotification]);
 
     useEffect(() => {
         const fetchNotifications = async () => {

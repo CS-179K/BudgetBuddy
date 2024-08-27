@@ -5,8 +5,17 @@ import CategoryBarChart from './CategoryBarChart';
 import './InvestmentForm.css';
 
 const SpendingSummary = () => {
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const monthName = months[monthIndex];
+
     const { investments } = useInvestmentsContext();
-    const [selectedMonth, setSelectedMonth] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState(monthName);
     const { incomes } = useIncomesContext();
 
     const filteredInvestments = investments.filter(investment => {
