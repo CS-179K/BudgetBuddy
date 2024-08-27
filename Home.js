@@ -156,18 +156,7 @@ const Home = () => {
     };
 
     useEffect(() => {
-        /*const fetchInvestments = async () => {
-            const response = await fetch('/api/investments', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
 
-            if (response.ok) {
-                dispatch({ type: 'SET_INVESTMENTS', payload: json });
-            }
-        };*/
 
         if (user) {
             fetchInvestments();
@@ -188,18 +177,6 @@ const Home = () => {
     };
 
     useEffect(() => {
-        /*const fetchBudgets = async () => {
-            const response = await fetch('/api/budgets', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
-
-            if (response.ok) {
-                budgetDispatch({ type: 'SET_BUDGETS', payload: json });
-            }
-        }; */
 
         if (user) {
             fetchBudgets();
@@ -220,18 +197,6 @@ const Home = () => {
     };
 
     useEffect(() => {
-        /*const fetchIncomes = async () => {
-            const response = await fetch('api/incomes', {
-                headers: {
-                    'Authorization' : `Bearer ${user.token}`
-                }
-            });
-            const json = await response.json();
-
-            if (response.ok) {
-                incomeDispatch({ type: 'SET_INCOMES', payload: json});
-            }
-        };*/
 
         if (user) {
             fetchIncomes();
@@ -253,19 +218,6 @@ const Home = () => {
     };
 
     useEffect(() => {
-        /*const fetchFiles = async () => {
-            const response = await fetch ('banks/upload', {
-                headers: {
-                    'Authorization' : `Bearer ${user.token}`
-                }
-            });
-
-            const json = await response.json();
-
-            if (response.ok) {
-                fileDispatch({ type: 'SET_FILES', payload: json });
-            }
-        };*/
 
         if (user) {
             fetchFiles();
@@ -305,42 +257,6 @@ useEffect(() => {
     }
   }, [investments, budgets]);
 
-  /*const fetchInvestments = async () => {
-    const response = await fetch('/api/investments', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: 'SET_INVESTMENTS', payload: json });
-    }
-  };
-
-  const fetchBudgets = async () => {
-    const response = await fetch('/api/budgets', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      budgetDispatch({ type: 'SET_BUDGETS', payload: json });
-    }
-  };
-
-  const fetchIncomes = async () => {
-    const response = await fetch('api/incomes', {
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      }
-    });
-    const json = await response.json();
-    if (response.ok) {
-      incomeDispatch({ type: 'SET_INCOMES', payload: json });
-    }
-  };*/
-
 
 
   const checkBudgetUsage = () => {
@@ -378,30 +294,6 @@ const dismissNotification = (id) => {
 
 // local Storage
 
-/*useEffect(() => {
-  const dismissedIds = JSON.parse(localStorage.getItem('dismissedNotifications')) || [];
-  setNotifications(currentNotifications => currentNotifications.filter(notif => !dismissedIds.includes(notif.id)));
-}, []);
-
-const dismissNotification = (id) => {
-setNotifications(currentNotifications => {
-    const updatedNotifications = currentNotifications.filter(notif => notif.id !== id);
-    const dismissedIds = updatedNotifications.map(notif => notif.id).concat(id);
-    localStorage.setItem('dismissedNotifications', JSON.stringify(dismissedIds));
-    return updatedNotifications;
-});
-};*/
-
-// session storage
-
-/*const dismissNotification = (id) => {
-setNotifications(currentNotifications => {
-    const updatedNotifications = currentNotifications.filter(notif => notif.id !== id);
-    const dismissedIds = updatedNotifications.map(notif => notif.id).concat(id);
-    sessionStorage.setItem('dismissedNotifications', JSON.stringify(dismissedIds));
-    return updatedNotifications;
-});
-};*/
 
 useEffect(() => {
 const dismissedIds = JSON.parse(sessionStorage.getItem('dismissedNotifications')) || [];
