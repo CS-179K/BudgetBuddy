@@ -7,6 +7,7 @@ import { BudgetsContextProvider } from './context/BudgetContext'
 import { IncomesContextProvider } from './context/IncomeContext'
 import { AuthContextProvider } from './context/AuthContext'
 import { BanksContextProvider } from './context/BankContext'
+import { NotificationsContextProvider } from './context/NotificationContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +17,9 @@ root.render(
         <BudgetsContextProvider>
           <IncomesContextProvider>
             <BanksContextProvider>
-              <App />
+              <NotificationsContextProvider>
+                <App />
+              </NotificationsContextProvider>
             </BanksContextProvider>
           </IncomesContextProvider>
         </BudgetsContextProvider>

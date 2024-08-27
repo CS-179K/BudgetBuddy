@@ -1,46 +1,65 @@
 const Notification = require('../models/notificationModel');
-const Budget = require('../models/budgetModel');
-const Investment = require('../models/investmentModel');
+const mongoose = require('mongoose')
 
-// Function to get all notifications for a user
+// Get all of the investments
 const getNotifications = async (req, res) => {
-    const { userId } = req.params;
+    const user_id = req.user._id
 
-    try {
-        const notifications = await Notification.find({ user_id: userId });
-        res.status(200).json(notifications);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
+    const notifications = await Notification.find({ user_id }).sort({createdAt: -1})
 
-// Function to dismiss a notification
+    res.status(200).json(notifications)
+}
+
+// Add a notification
 const updateNotification = async (req, res) => {
-    const { id } = req.params;
+    const {message, sent} = req.body
 
+    // Add document to database
     try {
-        const notification = await Notification.findByIdAndUpdate(id, { isDismissed: true }, { new: true });
-        res.status(200).json(notification);
+        const user_id = req.user._id
+        const notification = await Notification.create({message, sent, user_id})
+        res.status(200).json(notification)
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({error: error.message})
     }
 };
 
+// Delete a investment
 const deleteNotification = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params
 
-    try {
-        const notification = await Notification.findByIdAndUpdate(id, { isDismissed: false }, { new: true });
-        res.status(200).json(notification);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such investment'})
     }
-};
+
+    const notification = await Notification.findOneAndDelete({_id: id})
+
+    if (!notification) {
+        return res.status(400).json({error: 'No such investment'})
+    }
+
+    res.status(200).json(notification)
+}
+
+const checkNotification = async (req, res) => {
+        try {
+                const notification = await Notification.findOne({
+                        message: /investment of/,
+                        sent: false
+                });
+
+                res.json({ hasSentNotification: notification !== null });
+        } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Internal Server Error' });
+        }
+}
 
 
 module.exports = {
     getNotifications,
     updateNotification,
-    deleteNotification
+    deleteNotification,
+    checkNotification
 };
 

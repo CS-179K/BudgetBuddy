@@ -6,41 +6,14 @@ const notificationSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    type: {
-        type: String,
-        required: true
-    },
     message: {
         type: String,
         required: true
     },
-    percentage: {
-        type: Number,
-        required: true
-    },
-    isDismissed: {
+    sent: {
         type: Boolean,
-        default: false
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
+        required: true
     }
-});
-
-const updateNotification = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const notification = await Notification.findByIdAndUpdate(
-            id, 
-            { isDismissed: true }, 
-            { new: true }
-        );
-        res.status(200).json(notification);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
+}, { timestamps: true });
 
 module.exports = mongoose.model('Notification', notificationSchema);
