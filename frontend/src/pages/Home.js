@@ -31,6 +31,7 @@ const Home = () => {
     const { incomes, incomeDispatch } = useIncomesContext();
     const { files, fileDispatch } = useBanksContext();
     const { user } = useAuthContext();
+    const [notifications, setNotifications] = useState([]);
 
     const handleSetActiveView = (view) => {
         setActiveView(view);
@@ -159,6 +160,60 @@ const Home = () => {
     }, [dispatch, user]);
 
     useEffect(() => {
+        const fetchNotifications = async () => {
+            const response = await fetch(`/api/notifications/${user._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+            const json = await response.json();
+            if (response.ok) {
+                setNotifications(json);
+            }
+        };
+
+        if (user) {
+            fetchNotifications();
+        }
+    }, [user]);
+
+    // Function to create a notification
+    const createNotification = async (message) => {
+        const response = await fetch('/api/notifications', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({ userId: user._id, message })
+        });
+        if (response.ok) {
+            const newNotification = await response.json();
+            setNotifications((prev) => [...prev, newNotification]);
+        }
+    };
+
+    useEffect(() => {
+        if (investments && budgets) {
+            checkBudgetUsage();
+        }
+    }, [investments, budgets]);
+    const checkBudgetUsage = () => {
+        const totalInvestmentValue = investments.reduce((total, investment) => total + investment.amount, 0);
+        const totalBudgetValue = budgets.reduce((total, budget) => total + budget.amount, 0);
+        const percentageUsed = (totalInvestmentValue / totalBudgetValue) * 100;
+
+        if (percentageUsed >= 90 && !notifications.some(n => n.percentage === 90)) {
+            createNotification('Critical: You have used 90% of your budget.');
+        }
+        else if (percentageUsed >= 75 && !notifications.some(n => n.percentage === 75)) {
+            createNotification('Caution: You have used 75% of your budget.');
+        }
+        else if (percentageUsed >= 50 && !notifications.some(n => n.percentage === 50)) {
+            createNotification('Attention: You have used 50% of your budget.');
+        }
+    };
+    useEffect(() => {
         const fetchBudgets = async () => {
             const response = await fetch('/api/budgets', {
                 headers: {
@@ -244,6 +299,18 @@ const Home = () => {
             </div>
             {renderView()}
             {renderViewInvestment()}
+            {/* Notifications tab */}
+            {activeView === 'notifications' && (
+                <div className="home">
+                    <h2>Notifications</h2>
+                    {notifications.map(notif => (
+                        <div key={notif._id}>
+                            <p>{notif.message}</p>
+                            {/*<button onClick={deleteNotification}>Dismiss</button>*/}
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

@@ -1,17 +1,17 @@
 const Notification = require('../models/notificationModel')
 const mongoose = require('mongoose')
+const Investment = require("../models/investmentModel");
 
 // Get all of the Notification
 const getNotifications = async (req, res) => {
-    const user_id = req.user._id
 
-    const notification = await Notification.find({ user_id }).sort({createdAt: -1})
+    const notification = await Notification.find().sort({createdAt: -1})
 
     res.status(200).json(notification)
 }
 
 
-// Get a single notification
+// Get notification by UserId
 const getNotification = async (req, res) => {
     const { id } = req.params
 
@@ -19,7 +19,7 @@ const getNotification = async (req, res) => {
         return res.status(404).json({error: 'No such notification'})
     }
 
-    const notification = await Notification.findById(id)
+    const notification = await Notification.find({ user_id: id, read: false });
 
     if (!notification) {
         return res.status(404).json({error: 'No such notification'})
@@ -28,6 +28,23 @@ const getNotification = async (req, res) => {
     res.status(200).json(notification)
 }
 
+
+// Delete a Notification
+const deleteNotification = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such Notification'})
+    }
+
+    const notification = await Notification.findOneAndDelete({_id: id})
+
+    if (!notification) {
+        return res.status(400).json({error: 'No such Notification'})
+    }
+
+    res.status(200).json(notification)
+}
 
 const addNotification = async (req, res) => {
     try {
@@ -53,5 +70,6 @@ const addNotification = async (req, res) => {
 module.exports = {
     getNotifications,
     getNotification,
-    addNotification
+    addNotification,
+    deleteNotification
 }

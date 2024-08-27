@@ -3,7 +3,7 @@ const {
     addNotification,
     getNotifications,
     getNotification,
-} = require('../controllers/investmentController')
+} = require('../controllers/notificationController')
 
 const requireAuth = require('../middleware/requireAuth')
 
@@ -13,13 +13,13 @@ const router = express.Router()
 router.use(requireAuth)
 
 // GET all Notification
-router.get('/notifications', getNotifications)
+router.get('/', getNotifications)
 
-// GET a single Notification
-router.get('/notifications/:id', getNotification)
+// GET Notifications by userId
+router.get('/:userId', getNotification)
 
-// POST a new Notification
-router.post('/notifications', addNotification)
+// Create a new Notification
+router.post('/', addNotification)
 
 
 

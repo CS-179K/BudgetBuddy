@@ -10,6 +10,7 @@ const incomeRoutes = require('./routes/incomes')
 const bankRoutes = require('./routes/banks')
 
 const userRoutes = require('./routes/user')
+const notification = require("./routes/notifications");
 
 // Creates an Express app
 const app = express()
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/investments', investmentRoutes)
 app.use('/api/budgets', budgetRoutes)
+app.use('/api/notifications', notification)
 app.use('/api/incomes', incomeRoutes)
 app.use('/api/user', userRoutes)
 
