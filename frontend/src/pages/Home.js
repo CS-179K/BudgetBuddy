@@ -475,6 +475,7 @@ const Home = () => {
 
             if (response.ok) {
                 notificationDispatch({ type: 'SET_NOTIFICATIONS', payload: json });
+                localStorage.setItem('hasSentNotification', 'true');
             }
         };
 
