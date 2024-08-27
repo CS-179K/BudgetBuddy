@@ -2,8 +2,7 @@ const express = require('express');
 
 const { getNotifications, 
         updateNotification,
-        deleteNotification,
-        checkNotification } = require('../controllers/notificationController');
+        deleteNotification } = require('../controllers/notificationController');
 
 const requireAuth = require('../middleware/requireAuth');
 
@@ -20,7 +19,5 @@ router.delete('/:id', deleteNotification);
 
 // Route to add a notification
 router.post('/', updateNotification);
-
-router.get('/:id', checkNotification);
 
 module.exports = router;

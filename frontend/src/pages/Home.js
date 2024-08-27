@@ -48,6 +48,9 @@ const Home = () => {
     const { files, fileDispatch } = useBanksContext();
     const { notifications, notificationDispatch } = useNotificationsContext();
 
+    const storedNotificationStatus = localStorage.getItem('hasSentNotification');
+    const hasSentNotification = storedNotificationStatus === 'true';
+
     const { user } = useAuthContext();
 
     const capitalizeFirstLetter = (string) => {
@@ -419,12 +422,12 @@ const Home = () => {
     useEffect(() => {
         const notifyIfInvestmentExceeds = async () => {
             // Retrieve the notification status from localStorage
-            const storedNotificationStatus = localStorage.getItem('hasSentNotification');
-            const hasSentNotification = storedNotificationStatus === 'true';
-
-            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.5) {
+            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
+                localStorage.setItem('hasSentNotification', 'false')
+            }
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
                 const notification = {
-                    message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 50% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
+                    message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
                     sent: true
                 };
 
@@ -441,7 +444,6 @@ const Home = () => {
 
                 if (response.ok) {
                     notificationDispatch({ type: 'CREATE_NOTIFICATIONS', payload: json });
-                    // Store the notification status in localStorage
                     localStorage.setItem('hasSentNotification', 'true');
                 }
             }
@@ -463,9 +465,6 @@ const Home = () => {
 
             if (response.ok) {
                 notificationDispatch({ type: 'SET_NOTIFICATIONS', payload: json });
-                // Update localStorage based on fetched notifications
-                const hasSentNotification = json.some(notification => notification.sent);
-                localStorage.setItem('hasSentNotification', hasSentNotification.toString());
             }
         };
 
@@ -481,6 +480,11 @@ const Home = () => {
                 <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} in {selectedMonthStatements}.</p>
                 <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} in {selectedMonth}.</p>
                 <p>You plan to save ${totalBudgetValue - totalInvestmentValue} in {selectedMonth}.</p>
+                {hasSentNotification && (totalInvestmentValue / totalBudgetValue * 100 > 75) && (
+                    <p style={{ marginTop: '20px', padding: '10px', color: 'red'}}>
+                        Your investments are currently {(totalInvestmentValue / totalBudgetValue * 100).toFixed(2)}% of your budget.
+                    </p>
+                )}
             </div>
             {renderView()}
             {renderViewInvestment()}

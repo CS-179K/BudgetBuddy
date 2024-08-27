@@ -41,25 +41,9 @@ const deleteNotification = async (req, res) => {
     res.status(200).json(notification)
 }
 
-const checkNotification = async (req, res) => {
-        try {
-                const notification = await Notification.findOne({
-                        message: /investment of/,
-                        sent: false
-                });
-
-                res.json({ hasSentNotification: notification !== null });
-        } catch (error) {
-                console.error(error);
-                res.status(500).json({ error: 'Internal Server Error' });
-        }
-}
-
-
 module.exports = {
     getNotifications,
     updateNotification,
     deleteNotification,
-    checkNotification
 };
 
