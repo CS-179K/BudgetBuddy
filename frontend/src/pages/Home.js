@@ -453,7 +453,7 @@ const Home = () => {
                 const json = await response.json();
 
                 if (response.ok) {
-                    notificationDispatch({ type: 'CREATE_NOTIFICATIONS', payload: json });
+                    notificationDispatch({ type: 'CREATE_NOTIFICATION', payload: json });
                     localStorage.setItem('hasSentNotification', 'true');
                 }
             }
