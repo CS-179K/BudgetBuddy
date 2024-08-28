@@ -10,22 +10,14 @@ A financial tracker that allows the user to track and interact with their financ
 ## Functional Features
 - User registration.
 - User login and logout.
-- Password recovery.
-- Profile management.
 - Add incomes or expenses.
 - Categorize incomes and expenses.
 - Add recurring transactions.
 - Set and track budgets.
 - Alerts and notifications.
 - Set and track savings goals.
-- Generate visual financial reports as a bar graph.
-- Export data in consistent format.
-- List real-time balances from imported linked bank accounts.
-- Track debts, schedule payments, and create debt reduction plans.
-- Customizable dashboard with widgets.
-- Responsive design for desktop, tablet, or mobile devices.
-- Two-factor authentication, data encryption, and access control.
-- Customer support and help center.
+- Generate visual financial reports as a bar graph or pie chart.
+- Import data in consistent format (CSV).
 
 ## User Stories
 User Registration and Login
@@ -48,39 +40,27 @@ Expense Tracking.
 
 Budgeting.
 - As a user, I want to set a monthly budget for different categories of spending.
-- As a user, I want to receive alerts when spending reaches thresholds of 50%, 25%, and 10% of my budget.
+- As a user, I want to receive an alert when investments reaches a threshold of 75% of my budgets.
 - Points: 4.
 - Requires some complex math calculations.
 
 Saving Goals.
-- As a user, I want to create savings goals for long-term future expenses.
-- As a user, I want to track how many savings I have towards a saving goal.
+- As a user, I want to create savings goals through investments for monthly expenses.
+- As a user, I want to track how many savings I have left.
 - Points: 2.
-- Saving goals requires a form.
+- Saving goals requires multiple schema already completed.
 
-Data Security.
-- As a user, I want to secure my financial data and ensure confidential information is safe.
-- As a user, I want to use two-factor authentication so I can add an extra layer of security to my account.
-- Points: 3.
-- Requires API, extra layer of security.
-
-Integration with Bank Accounts.
-- As a user, I want to connect my bank accounts to import transactions to the system.
-- As a user, I want to see my real-time bank account balances so I can have an up-to-date view of my finances.
+CSV File Imports for Bank Statements.
+- As a user, I want to import my bank statements to track real transactions.
+- As a user, I want to compare my income and transactions with my ideal spending goals.
 - Points: 7.
-- Requires API, potential security flaws.
+- Requires comprehensive understanding of converting CSV files to JSON.
 
 Financial Reports.
 - As a user, I want to generate monthly and yearly financial reports detailing financial performance.
 - As a user, I want to see visualizations of different spending categories based on percentages.
 - Points: 4.
 - Some complex math and data aggregation.
-
-Debt Management.
-- As a user, I want to track debt so I know how much I owe.
-- As a user, I want to create a plan to pay off debt.
-- Points: 2.
-- Debt management requires a form and database.
 
 Recurring Transactions.
 - As a user, I want to set up recurring payments so I do not need to manually enter them.
@@ -91,14 +71,9 @@ Recurring Transactions.
 ## Non-Functional Requirements
 Performance.
 - Fast response times to user actions.
-- Large scalability and throughput.
 
 Reliability.
 - Good uptime and good error messages.
-- Backup and recover data.
-
-Security.
-- Data encryption, user authentication and authorization.
 
 Usability.
 - Intuitive UI, accessible, and detailed documentation.
@@ -110,7 +85,7 @@ Compliance.
 - System follows legal and ethical practices regarding user data and auditing.
 
 Interoperability.
-- System allows API integration and exports data in standard formats.
+- System allows API integration and imports data in CSV format.
 
 Localization.
 - Support for other languages and currencies.
@@ -119,36 +94,33 @@ Efficiency.
 - Reduce server resources and operational costs, minimize power consumption.
 
 Portability.
-- Accessible via web browsers, easy to export data.
+- Accessible via web browsers.
 
 ## Architecture
 
 Development Tools.
-- We use gitHub to do the version control and collaboration.
-- If possible we use CircleCI to build the CI/CD pipeline to integrate our project from dev, test, staging and prod environment. 
-- Depending on self preference we use IDEA or VS-Code. Npm will be used to build and pack the project.
+- We are using Github for our version control system (VCS).
+- We are using VSCode as our IDE and NPM as our package manager.
 
 Frontend
-- HTML provides the skeletal structure, while CSS offers the visual styles and layout.
-- React: This JavaScript library will be employed for building user interfaces, specifically for handling dynamic user interactions and rendering complex UI elements. React's component-based architecture allows for reusable UI components, enhancing maintainability and scalability.
+- HTML provides the skeletal structure of our project, where CSS offers the visual styles and layout.
+- React allows for handling dynamic user interactions, and rendering complex UI elements. Its' component-based architecture allows for reusable UI components, enhancing maintainability and scalability.
 
 Backend
-- Node.js: The backend will be powered by Node.js, an efficient and scalable platform for building server-side applications. Node.js will handle server-side logic, business operations, and database interactions. The asynchronous nature of Node.js will support high throughput and fast response times.
-- Forms will be used to collect user data for debt management and recurring transactions. This data will be stored securely in our MongoDB database. MySQL is also considered but it depends on our practise.
-
-![image](https://github.com/user-attachments/assets/83f2e669-8640-4892-8956-0c8cb15d84e0)
+- Node.js is an efficient and scalable platform for building server-side applications. It handles server-side logic, business operations, and database interactions. The asynchronous nature of Node.js will support high throughput and fast response times.
+- Forms and file systems are integrated and tested through User Input, MongoDB, and Express.js.
 
 ## Techniques
 Tools.
-- IDEA or VS-Code
+- VSCode.
 - GitHub.
 - Postman.
-- npm
+- npm.
 
 Frontend.
 - HTML.
 - CSS.
-- React
+- React.
 
 Backend.
 - Node.js.
@@ -156,12 +128,14 @@ Backend.
 
 Database.
 - MongoDB.
-- MySQL(elective)
 
+## Final MongoDB Schema
 
+![Budget Buddy Final Schema](https://github.com/user-attachments/assets/6d1ba226-f101-40e5-8b5c-e54ab1d4e1bb)
 
-## Week 1 Burndown Chart
+## Final Burndown 
 
-![Burndown Chart](https://github.com/user-attachments/assets/8f2bd26e-f784-4939-a3d5-3c8d8f672bc1)
+![image](https://github.com/user-attachments/assets/58fda103-1f6a-45a4-b2b1-f3710eb8a311)
+
 
 

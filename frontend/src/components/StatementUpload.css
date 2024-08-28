@@ -1,0 +1,41 @@
+/* StatementUpload.css */
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.upload-form label {
+    margin: 10px 0 5px;
+}
+
+.upload-form input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.upload-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.upload-form button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+
+.error {
+    border: 1px solid red;
+}

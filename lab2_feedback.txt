@@ -1,0 +1,35 @@
+User Stories:
+
+"Large scalability and throughput."
+You probably don't want to tackle scalability in this kind of project.
+// Unless your planning on deploying on cloud. But that would amount to a very large project in an of itself.
+
+In general we don't really have time to test some of these non functional requirements.
+// But it does look good in docs ^_^;;
+
+____ Sprint 1 ____
+Tasks:
+perfect
+
+Tests:
+great
+
+____ conc. ____
+
+Great job on the documentation. I think most managers would look over it and think everything is fine.
+
+But I won't lie it does worry me a bit.
+Really do check the banking API's.
+I know I'm harping on it, but we need to know asap if we need a backup plan.
+
+It would be good if you could figure out the banking API situation by lab Thursday.
+On Thursday we're going to do a UI wireframe, and DB Schema.
+
+6/6
+
+
+
+
+
+
+
