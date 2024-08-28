@@ -432,10 +432,10 @@ const Home = () => {
     useEffect(() => {
         const notifyIfInvestmentExceeds = async () => {
             // Retrieve the notification status from localStorage
-            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
+            if (totalInvestmentValue / totalBudgetValue <= 0.25) {
                 localStorage.setItem('hasSentNotification', 'false')
             }
-            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.25) {
                 const notification = {
                     message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
                     sent: true
@@ -484,7 +484,7 @@ const Home = () => {
 
     return (
         <div>
-            <Sidebar setActiveView={handleSetActiveView} />
+            <Sidebar setActiveView={handleSetActiveView} notifications={notifications} />
             <div style={{ flex: 1, padding: '15px' }}>
                 <h1>Account Summary</h1>
                 <p>Your income is currently ${totalIncomeValue} and you spent ${totalStatementValue.toFixed(2)} in {selectedMonthStatements}.</p>
