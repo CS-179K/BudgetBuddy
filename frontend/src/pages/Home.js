@@ -432,10 +432,10 @@ const Home = () => {
     useEffect(() => {
         const notifyIfInvestmentExceeds = async () => {
             // Retrieve the notification status from localStorage
-            if (totalInvestmentValue / totalBudgetValue <= 0.25) {
+            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
                 localStorage.setItem('hasSentNotification', 'false')
             }
-            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.25) {
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
                 const notification = {
                     message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
                     sent: true

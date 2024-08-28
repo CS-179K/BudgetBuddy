@@ -69,6 +69,42 @@ const createInvestment = async (req, res) => {
     }
 };
 
+// Get investments within a date range (placeholder function)
+const getInvestmentsByDateRange = async (req, res) => {
+    // Implement the logic to filter investments by date range
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+        return res.status(400).json({ error: 'Start date and end date are required' });
+    }
+
+    try {
+        const user_id = req.user._id;
+        const investments = await Investment.find({
+            user_id,
+            $or: [
+                { isRecurring: false },
+                {
+                    isRecurring: true,
+                    $and: [
+                        { startDate: { $lte: endDate } },
+                        {
+                            $or: [
+                                { recurrenceFrequency: 'weekly', /* additional conditions */ },
+                                { recurrenceFrequency: 'monthly', /* additional conditions */ },
+                                { recurrenceFrequency: 'yearly', /* additional conditions */ },
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+        res.status(200).json(investments);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Delete an investment
 const deleteInvestment = async (req, res) => {
     const { id } = req.params;
@@ -110,5 +146,6 @@ module.exports = {
     getInvestment,
     createInvestment,
     deleteInvestment,
-    updateInvestment
+    updateInvestment,
+    getInvestmentsByDateRange  
 };

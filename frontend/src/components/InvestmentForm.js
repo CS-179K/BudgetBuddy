@@ -26,15 +26,32 @@ const InvestmentForm = () => {
             return;
         }
 
-        const investment = {
+        // Create the investment object with the necessary fields
+        let investment = {
             title,
             amount,
             investmentType: investmentType === 'other' ? customInvestmentType : investmentType,
             investmentDescription,
             isRecurring,
-            recurrenceFrequency,
-            startDate
         };
+
+        // Only include recurrenceFrequency and startDate if isRecurring is true
+        if (isRecurring) {
+            if (!recurrenceFrequency) {
+                setError('Recurrence frequency is required for recurring payments.');
+                setEmptyFields(['recurrenceFrequency']);
+                return;
+            }
+
+            if (!startDate) {
+                setError('Start date is required for recurring payments.');
+                setEmptyFields(['startDate']);
+                return;
+            }
+
+            investment.recurrenceFrequency = recurrenceFrequency;
+            investment.startDate = startDate;
+        }
 
         const response = await fetch('/api/investments', {
             method: 'POST',
@@ -111,7 +128,7 @@ const InvestmentForm = () => {
                 </>
             )}
 
-<label>Is this a recurring payment?</label>
+            <label>Is this a recurring payment?</label>
             <input
                 type="checkbox"
                 onChange={(e) => setIsRecurring(e.target.checked)}
@@ -148,8 +165,6 @@ const InvestmentForm = () => {
                 value={investmentDescription}
                 className={emptyFields.includes('investmentDescription') ? 'error' : 'description'}
             />
-
-            
 
             <button>Add Investment</button>
             {error && <div className="error">{error}</div>}

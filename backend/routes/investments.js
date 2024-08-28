@@ -5,7 +5,7 @@ const {
     getInvestment,
     deleteInvestment,
     updateInvestment,
-    getInvestmentsByDateRange  // Import the new controller function
+    getInvestmentsByDateRange
 } = require('../controllers/investmentController');
 
 const requireAuth = require('../middleware/requireAuth');
@@ -21,8 +21,8 @@ router.get('/', getInvestments);
 // GET a single investment
 router.get('/:id', getInvestment);
 
-// GET investments within a date range
-router.get('/filterByDate', getInvestmentsByDateRange);  // Add the new route
+// GET investments within a date range (Ensure this route is properly set up)
+router.get('/filterByDate', getInvestmentsByDateRange);
 
 // POST a new investment
 router.post('/', createInvestment);

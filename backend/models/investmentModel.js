@@ -26,10 +26,15 @@ const investmentSchema = new Schema({
     recurrenceFrequency: {
         type: String,
         enum: ['weekly', 'monthly', 'yearly'],
-        default: ''
+        required: function () {
+            return this.isRecurring;
+        }
     },
     startDate: {
         type: Date,
+        required: function () {
+            return this.isRecurring;
+        }
     },
     user_id: {
         type: String,
