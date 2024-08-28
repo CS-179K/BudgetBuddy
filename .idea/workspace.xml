@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ef5c6204-79b9-439e-8dba-eb9c380f2308" name="Changes" comment="feat: add notification DB driven." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2kWIqXXPbGKKZrkPaoPI6po7ZGm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/123456/ucr_cs/cs179K/BudgetBuddy/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ef5c6204-79b9-439e-8dba-eb9c380f2308" name="Changes" comment="" />
+      <created>1723393097847</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723393097847</updated>
+      <workItem from="1723393099585" duration="14555000" />
+      <workItem from="1723903482801" duration="4466000" />
+      <workItem from="1723911893200" duration="6622000" />
+      <workItem from="1724338033147" duration="13689000" />
+    </task>
+    <task id="LOCAL-00001" summary="add idea git">
+      <created>1723393624229</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1723393624229</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: add time out for login and readme file for backend">
+      <created>1723651754312</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723651754312</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: investment amount input no less than zero and modify backend readme">
+      <created>1723673403400</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723673403400</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: config yarn for front-end">
+      <created>1723905848190</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1723905848190</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: config yarn for front-end">
+      <created>1723905862767</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723905862767</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: config yarn for back-end">
+      <created>1723906659807</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723906659807</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: add github OAuth for user">
+      <created>1723911623856</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723911623856</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: add github OAuth for user">
+      <created>1723911633489</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723911633489</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: add groceries and gas for investment">
+      <created>1723913605409</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723913605409</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: add description for investment">
+      <created>1723914042464</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723914042464</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: modify the function">
+      <created>1723955988845</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1723955988845</updated>
+    </task>
+    <task id="LOCAL-00012" summary="merge">
+      <created>1723994977791</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723994977791</updated>
+    </task>
+    <task id="LOCAL-00013" summary="solve conflict">
+      <created>1723995521275</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723995521275</updated>
+    </task>
+    <task id="LOCAL-00014" summary="modify yarn package">
+      <created>1723996383331</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723996383331</updated>
+    </task>
+    <task id="LOCAL-00015" summary="modify yarn package">
+      <created>1724647207728</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1724647207728</updated>
+    </task>
+    <task id="LOCAL-00016" summary="modify user">
+      <created>1724670171729</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1724670171729</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: add notification controller.">
+      <created>1724681671027</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1724681671027</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: add notification api.">
+      <created>1724682195214</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1724682195214</updated>
+    </task>
+    <task id="LOCAL-00019" summary="feat: modify notification api.">
+      <created>1724686717724</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1724686717724</updated>
+    </task>
+    <task id="LOCAL-00020" summary="remove unused code">
+      <created>1724762506591</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1724762506591</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat: add notification DB driven.">
+      <created>1724762520550</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1724762520550</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add idea git" />
+    <MESSAGE value="feat: add time out for login and readme file for backend" />
+    <MESSAGE value="fix: investment amount input no less than zero and modify backend readme" />
+    <MESSAGE value="feat: config yarn for front-end" />
+    <MESSAGE value="feat: config yarn for back-end" />
+    <MESSAGE value="feat: add github OAuth for user" />
+    <MESSAGE value="feat: add groceries and gas for investment" />
+    <MESSAGE value="feat: add description for investment" />
+    <MESSAGE value="feat: modify the function" />
+    <MESSAGE value="merge" />
+    <MESSAGE value="solve conflict" />
+    <MESSAGE value="modify yarn package" />
+    <MESSAGE value="modify user" />
+    <MESSAGE value="feat: add notification controller." />
+    <MESSAGE value="feat: add notification api." />
+    <MESSAGE value="feat: modify notification api." />
+    <MESSAGE value="remove unused code" />
+    <MESSAGE value="feat: add notification DB driven." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add notification DB driven." />
+  </component>
+</project>

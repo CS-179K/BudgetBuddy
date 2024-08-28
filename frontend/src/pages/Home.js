@@ -3,6 +3,7 @@ import { useInvestmentsContext } from "../hooks/useInvestmentsContext";
 import { useBudgetsContext } from "../hooks/useBudgetsContext";
 import { useIncomesContext } from "../hooks/useIncomesContext";
 import { useBanksContext } from "../hooks/useBanksContext";
+import { useNotificationsContext } from '../hooks/useNotificationsContext';
 import { useAuthContext } from "../hooks/useAuthContext";
 
 // BudgetBuddy Components
@@ -19,27 +20,134 @@ import IncomeForm from '../components/IncomeForm';
 import StatementDetails from '../components/StatementDetails';
 import StatementUpload from '../components/StatementUpload';
 import SpendingSummary from '../components/SpendingSummary';
+import NotificationDetails from '../components/Notifications'
 
 import InvestmentPieChart from '../components/InvestmentPieChart';
 import BudgetDiffChart from '../components/BudgetDiffChart';
+import IncomePieChart from '../components/IncomeChart';
 
 const Home = () => {
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const monthName = months[monthIndex];
+
     const [activeView, setActiveView] = useState('investments');
     const [activeViewInvestment, setActiveViewInvestment] = useState('neither');
+
+    const [selectedMonth, setSelectedMonth] = useState(monthName);
+    const [selectedMonthStatements, setSelectedMonthStatements] = useState(monthName);
+
+    const [totalInvestmentValue, setTotalInvestmentValue] = useState(0);
+    const [totalStatementValue, setTotalStatementValue] = useState(0);
+    const [totalIncomeValue, setTotalIncomeValue] = useState(0);
+    const [totalBudgetValue, setTotalBudgetValue] = useState(0);
+
+    const [filteredInvestments, setFilteredInvestments] = useState([]);
+    const [filteredFiles, setFilteredFiles] = useState([]);
+    const [filteredBudgets, setFilteredBudgets] = useState([]);
+    const [filteredIncomes, setFilteredIncomes] = useState([]);
+
     const { investments, dispatch } = useInvestmentsContext();
     const { budgets, budgetDispatch } = useBudgetsContext();
     const { incomes, incomeDispatch } = useIncomesContext();
     const { files, fileDispatch } = useBanksContext();
+    const { notifications, notificationDispatch } = useNotificationsContext();
+
+    const storedNotificationStatus = localStorage.getItem('hasSentNotification');
+    const hasSentNotification = storedNotificationStatus === 'true';
+
     const { user } = useAuthContext();
     const [notifications, setNotifications] = useState([]);
 
+    const capitalizeFirstLetter = (string) => {
+        if (typeof string !== 'string') return '';
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };    
+
+    //Filters investments by month
+    useEffect(() => {
+        if (investments && Array.isArray(investments)) {
+            const filtered = investments.filter(investment => {
+                const investmentDate = new Date(investment.createdAt);
+                const investmentMonth = capitalizeFirstLetter(investmentDate.toLocaleString('default', { month: 'long' }));
+                return investmentMonth === capitalizeFirstLetter(selectedMonth);
+            });
+    
+            setFilteredInvestments(filtered);
+    
+            const totalValue = filtered.reduce((total, investment) => total + investment.amount, 0);
+            setTotalInvestmentValue(totalValue);
+        }
+    }, [investments, selectedMonth]);
+
+    //Filters statements by month
+    useEffect(() => {
+        if (files && Array.isArray(files)) {
+            const filteredFiles = files.filter(file => {
+                const fileDate = new Date(file.date);
+                const fileMonth = capitalizeFirstLetter(fileDate.toLocaleString('default', { month: 'long' }));
+                return fileMonth === capitalizeFirstLetter(selectedMonthStatements);
+            });
+    
+            setFilteredFiles(filteredFiles);
+    
+            const totalValue = filteredFiles.reduce((total, file) => total - file.amount, 0);
+            setTotalStatementValue(totalValue);
+        }
+    }, [files, selectedMonthStatements]);
+
+    //Filters incomes by month
+    useEffect(() => {
+        if (incomes && Array.isArray(incomes)) {
+            const filteredIncomes = incomes.filter(income => {
+                const incomeDate = new Date(income.createdAt);
+                const incomeMonth = capitalizeFirstLetter(incomeDate.toLocaleString('default', { month: 'long' }));
+                return incomeMonth === capitalizeFirstLetter(selectedMonthStatements);
+            });
+    
+            setFilteredIncomes(filteredIncomes);
+    
+            const totalValue = filteredIncomes.reduce((total, income) => total + income.amount, 0);
+            setTotalIncomeValue(totalValue);
+        }
+    }, [incomes, selectedMonthStatements]);
+
+    // Filters budgets by month
+    useEffect(() => {
+        if (budgets && Array.isArray(budgets)) {
+            const filteredBudgets = budgets.filter(budget => {
+                const budgetDate = new Date(budget.createdAt);
+                const budgetMonth = capitalizeFirstLetter(budgetDate.toLocaleString('default', { month: 'long' }));
+                return budgetMonth === capitalizeFirstLetter(selectedMonth);
+            });
+    
+            setFilteredBudgets(filteredBudgets);
+    
+            const totalValue = filteredBudgets.reduce((total, budget) => total + budget.amount, 0);
+            setTotalBudgetValue(totalValue);
+        }
+    }, [budgets, selectedMonth]);
+
+    const handleMonthChange = (e) => {
+        setSelectedMonth(e.target.value);
+    };
+
+    const handleMonthChangeStatements = (e) => {
+        setSelectedMonthStatements(e.target.value);
+    }
+
     const handleSetActiveView = (view) => {
         setActiveView(view);
-        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary') {
+        if (view === 'budgets' || view === 'incomes' || view === 'statements' || view === 'spendingSummary' || view === 'notifications') {
             setActiveViewInvestment('neither');
         }
     };
-
+    
     const renderView = () => {
         switch (activeView) {
             case 'investments':
@@ -53,10 +161,34 @@ const Home = () => {
                     <div className="home">
                         <div className="budgets">
                             <h2>Budget</h2>
-                            <BudgetDiffChart />
-                            {budgets && budgets.map((budget) => (
-                                <BudgetDetails key={budget._id} budget={budget} />
-                            ))}
+
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonth} onChange={handleMonthChange}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
+
+                            <BudgetDiffChart selectedMonth = {selectedMonth} />
+                            {filteredBudgets && filteredBudgets.length > 0 ? (
+                                filteredBudgets.map((budget) => (
+                                    <BudgetDetails key={budget._id} budget={budget} />
+                                ))
+                            ) : (
+                                <p>No budgets for the selected month.</p>
+                            )}
                         </div>
                         <BudgetForm />
                     </div>
@@ -66,9 +198,34 @@ const Home = () => {
                     <div className="home">
                         <div className="incomes">
                             <h2>Income</h2>
-                            {incomes && incomes.map((income) => (
-                                <IncomeDetails key={income._id} income={income} />
-                            ))}
+
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonthStatements} onChange={handleMonthChangeStatements}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
+
+                            <IncomePieChart selectedMonth = {selectedMonthStatements}/>
+                            {filteredIncomes && filteredIncomes.length > 0 ? (
+                                filteredIncomes.map((income) => (
+                                    <IncomeDetails key={income._id} income={income} />
+                                ))
+                            ) : (
+                                <p>No incomes for the selected month.</p>
+                            )}
                         </div>
                         <IncomeForm />
                     </div>
@@ -78,9 +235,33 @@ const Home = () => {
                     <div className = "home">
                         <div className="budgets">
                             <h2>Statements</h2>
-                            {files && files.map((file) => (
-                                <StatementDetails key={file._id} file={file} />
-                            ))}
+
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonthStatements} onChange={handleMonthChangeStatements}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
+                    
+                            {filteredFiles && filteredFiles.length > 0 ? (
+                                filteredFiles.map((file) => (
+                                    <StatementDetails key={file._id} file={file} />
+                                ))
+                            ) : (
+                                <p>No statements for the selected month.</p>
+                            )}
                         </div>  
                         <StatementUpload />
                     </div>
@@ -94,6 +275,16 @@ const Home = () => {
                         </div>  
                     </div>
                 );
+            case 'notifications':
+                return (
+                    <div className = "home">
+                        <div className = "investments">
+                            {notifications && notifications.map((notification) => (
+                                <NotificationDetails key={notification._id} notification={notification} />
+                            ))}
+                        </div>
+                    </div>
+                )
             default:
                 return (
                     <div className="home">
@@ -109,12 +300,34 @@ const Home = () => {
                     <div className="home">
                         <div className="investments">
                             <h2>Investments</h2>
+                            <form className="create">
+                                <label>Month:</label>
+                                <select value={selectedMonth} onChange={handleMonthChange}>
+                                    <option value=""></option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </form>
                             <div className="chart-container">
-                                <InvestmentPieChart />
+                                <InvestmentPieChart selectedMonth={selectedMonth}/>
                             </div>
-                            {investments && investments.map((investment) => (
-                                <InvestmentDetails key={investment._id} investment={investment} />
-                            ))}
+                            {filteredInvestments && filteredInvestments.length > 0 ? (
+                                filteredInvestments.map((investment) => (
+                                    <InvestmentDetails key={investment._id} investment={investment} />
+                                ))
+                            ) : (
+                                <p>No investments for the selected month.</p>
+                            )}
                             <h3>Total Investment Value: ${totalInvestmentValue.toFixed(2)}</h3>
                         </div>
                     </div>
@@ -270,32 +483,122 @@ const Home = () => {
             fetchFiles();
         }
     }, [fileDispatch, user]);
+    
+    /*useEffect(() => {
+        const notifyIfInvestmentExceeds = async () => {
+            // Retrieve the notification status from localStorage
+            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
+                localStorage.setItem('hasSentNotification', 'false')
+            }
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
+                const notification = {
+                    message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
+                    sent: true
+                };
 
-    const totalInvestmentValue = investments
-        ? investments.reduce((total, investment) => total + investment.amount, 0)
-        : 0;
+                const response = await fetch('/api/notifications', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(notification)
+                });
 
-    const totalBudgetValue = budgets
-        ? budgets.reduce((total, budget) => total + budget.amount, 0)
-        : 0;
+                const json = await response.json();
 
-    const totalIncomeValue = incomes
-        ? incomes.reduce((total, income) => total + income.amount, 0)
-        : 0;
+                if (response.ok) {
+                    notificationDispatch({ type: 'CREATE_NOTIFICATION', payload: json });
+                    localStorage.setItem('hasSentNotification', 'true');
+                }
+            }
+        };
 
-    const totalStatementValue = files
-        ? files.reduce((total, file) => total - file.amount, 0)
-        : 0;
+        notifyIfInvestmentExceeds();
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch, hasSentNotification]);*/
+
+    useEffect(() => {
+        const notifyIfInvestmentExceeds = async () => {
+            const thresholds = [0.25, 0.50, 0.75, 1.00];
+            const thresholdMessages = {
+                '0.25': '25%',
+                '0.50': '50%',
+                '0.75': '75%',
+                '1.00': '100%'
+            };
+    
+            for (let threshold of thresholds) {
+                const hasSentNotification = localStorage.getItem(`hasSentNotification_${threshold}`) === 'true';
+    
+                if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= threshold) {
+                    const notification = {
+                        message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} has reached ${thresholdMessages[threshold]} of your total budget of $${totalBudgetValue.toFixed(2)}.`,
+                        sent: true
+                    };
+    
+                    const response = await fetch('/api/notifications', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(notification)
+                    });
+    
+                    const json = await response.json();
+    
+                    if (response.ok) {
+                        notificationDispatch({ type: 'CREATE_NOTIFICATION', payload: json });
+                        localStorage.setItem(`hasSentNotification_${threshold}`, 'true');
+                    }
+                }
+    
+                // Reset the notification if the investment drops below the threshold
+                if (totalInvestmentValue / totalBudgetValue < threshold) {
+                    localStorage.setItem(`hasSentNotification_${threshold}`, 'false');
+                }
+            }
+        };
+    
+        notifyIfInvestmentExceeds();
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch]);
+    
+
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            const response = await fetch('/api/notifications', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                notificationDispatch({ type: 'SET_NOTIFICATIONS', payload: json });
+                localStorage.setItem('hasSentNotification', 'true');
+            }
+        };
+
+        if (user) fetchNotifications();
+    }, [notificationDispatch, user]);
 
     return (
         <div>
-            <Sidebar setActiveView={handleSetActiveView} />
+            <Sidebar setActiveView={handleSetActiveView} notifications={notifications} />
             <div style={{ flex: 1, padding: '15px' }}>
                 <h1>Account Summary</h1>
-                <p>Your income is currently ${totalIncomeValue} and you spent ${totalStatementValue.toFixed(2)} last month.</p>
-                <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} last month.</p>
-                <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} this month.</p>
-                <p>You plan to save ${totalBudgetValue - totalInvestmentValue} this month.</p>
+                <p>Your income is currently ${totalIncomeValue} and you spent ${totalStatementValue.toFixed(2)} in {selectedMonthStatements}.</p>
+                <p>You saved ${(totalIncomeValue - totalStatementValue).toFixed(2)} in {selectedMonthStatements}.</p>
+                <p>Your budget is ${totalBudgetValue} and you plan to spend ${totalInvestmentValue} in {selectedMonth}.</p>
+                <p>You plan to save ${totalBudgetValue - totalInvestmentValue} in {selectedMonth}.</p>
+                {hasSentNotification && (totalInvestmentValue / totalBudgetValue * 100 > 75) && (
+                    <p style={{ marginTop: '20px', padding: '10px', color: 'red'}}>
+                        Your investments are currently {(totalInvestmentValue / totalBudgetValue * 100).toFixed(2)}% of your budget.
+                    </p>
+                )}
             </div>
             {renderView()}
             {renderViewInvestment()}
