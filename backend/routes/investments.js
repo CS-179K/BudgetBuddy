@@ -1,32 +1,36 @@
-const express = require('express')
+const express = require('express');
 const {
     createInvestment,
     getInvestments,
     getInvestment,
     deleteInvestment,
-    updateInvestment
-} = require('../controllers/investmentController')
+    updateInvestment,
+    getInvestmentsByDateRange  // Import the new controller function
+} = require('../controllers/investmentController');
 
-const requireAuth = require('../middleware/requireAuth')
+const requireAuth = require('../middleware/requireAuth');
 
-const router = express.Router()
+const router = express.Router();
 
 // Require Auth for all investment routes
-router.use(requireAuth)
+router.use(requireAuth);
 
 // GET all investments
-router.get('/', getInvestments)
+router.get('/', getInvestments);
 
 // GET a single investment
-router.get('/:id', getInvestment)
+router.get('/:id', getInvestment);
+
+// GET investments within a date range
+router.get('/filterByDate', getInvestmentsByDateRange);  // Add the new route
 
 // POST a new investment
-router.post('/', createInvestment)
+router.post('/', createInvestment);
 
-// DELETE a investment
-router.delete('/:id', deleteInvestment)
+// DELETE an investment
+router.delete('/:id', deleteInvestment);
 
-// UPDATE a investment
-router.patch('/:id', updateInvestment)
+// UPDATE an investment
+router.patch('/:id', updateInvestment);
 
-module.exports = router
+module.exports = router;
