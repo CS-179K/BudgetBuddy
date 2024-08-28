@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const investmentSchema = new Schema({
     title: {
@@ -19,10 +19,27 @@ const investmentSchema = new Schema({
         type: String,
         required: true
     },
+    isRecurring: {
+        type: Boolean,
+        default: false
+    },
+    recurrenceFrequency: {
+        type: String,
+        enum: ['weekly', 'monthly', 'yearly'],
+        required: function () {
+            return this.isRecurring;
+        }
+    },
+    startDate: {
+        type: Date,
+        required: function () {
+            return this.isRecurring;
+        }
+    },
     user_id: {
         type: String,
         required: true
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-module.exports = mongoose.model('Investment', investmentSchema)
+module.exports = mongoose.model('Investment', investmentSchema);

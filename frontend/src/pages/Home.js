@@ -429,13 +429,13 @@ const Home = () => {
         }
     }, [fileDispatch, user]);
     
-    useEffect(() => {
+    /*useEffect(() => {
         const notifyIfInvestmentExceeds = async () => {
             // Retrieve the notification status from localStorage
-            if (totalInvestmentValue / totalBudgetValue <= 0.25) {
+            if (totalInvestmentValue / totalBudgetValue <= 0.75) {
                 localStorage.setItem('hasSentNotification', 'false')
             }
-            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.25) {
+            if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= 0.75) {
                 const notification = {
                     message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} is 75% or more of your total budget of $${totalBudgetValue.toFixed(2)}.`,
                     sent: true
@@ -460,7 +460,55 @@ const Home = () => {
         };
 
         notifyIfInvestmentExceeds();
-    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch, hasSentNotification]);
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch, hasSentNotification]);*/
+
+    useEffect(() => {
+        const notifyIfInvestmentExceeds = async () => {
+            const thresholds = [0.25, 0.50, 0.75, 1.00];
+            const thresholdMessages = {
+                '0.25': '25%',
+                '0.50': '50%',
+                '0.75': '75%',
+                '1.00': '100%'
+            };
+    
+            for (let threshold of thresholds) {
+                const hasSentNotification = localStorage.getItem(`hasSentNotification_${threshold}`) === 'true';
+    
+                if (!hasSentNotification && totalBudgetValue > 0 && totalInvestmentValue / totalBudgetValue >= threshold) {
+                    const notification = {
+                        message: `Alert: Your investment of $${totalInvestmentValue.toFixed(2)} has reached ${thresholdMessages[threshold]} of your total budget of $${totalBudgetValue.toFixed(2)}.`,
+                        sent: true
+                    };
+    
+                    const response = await fetch('/api/notifications', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(notification)
+                    });
+    
+                    const json = await response.json();
+    
+                    if (response.ok) {
+                        notificationDispatch({ type: 'CREATE_NOTIFICATION', payload: json });
+                        localStorage.setItem(`hasSentNotification_${threshold}`, 'true');
+                    }
+                }
+    
+                // Reset the notification if the investment drops below the threshold
+                if (totalInvestmentValue / totalBudgetValue < threshold) {
+                    localStorage.setItem(`hasSentNotification_${threshold}`, 'false');
+                }
+            }
+        };
+    
+        notifyIfInvestmentExceeds();
+    }, [totalInvestmentValue, totalBudgetValue, user, notifications, notificationDispatch]);
+    
+
 
     useEffect(() => {
         const fetchNotifications = async () => {
