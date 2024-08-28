@@ -1,0 +1,25 @@
+.sidebar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.sidebar li {
+    margin: 5px;
+}
+
+.sidebar button {
+    padding: 10px 20px;
+    background-color: white;
+    color: green;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebar button.active {
+    background-color: grey;
+    color: white;
+}
