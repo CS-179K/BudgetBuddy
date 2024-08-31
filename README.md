@@ -125,7 +125,7 @@ Database.
 
 ## Final MongoDB Schema
 
-![Budget Buddy Final Schema](https://github.com/user-attachments/assets/6d1ba226-f101-40e5-8b5c-e54ab1d4e1bb)
+![CS179K BudgetBuddy](https://github.com/user-attachments/assets/fd4ab984-e38d-4185-ae46-db7be4d3905a)
 
 ## Final Burndown 
 
