@@ -57,16 +57,10 @@ CSV File Imports for Bank Statements.
 - Requires comprehensive understanding of converting CSV files to JSON.
 
 Financial Reports.
-- As a user, I want to generate monthly and yearly financial reports detailing financial performance.
+- As a user, I want to generate monthly financial reports detailing financial performance.
 - As a user, I want to see visualizations of different spending categories based on percentages.
 - Points: 4.
 - Some complex math and data aggregation.
-
-Recurring Transactions.
-- As a user, I want to set up recurring payments so I do not need to manually enter them.
-- As a user, I want to receive reminders for upcoming recurring payments.
-- Points: 2.
-- Recurring transactions requires a form and database.
 
 ## Non-Functional Requirements
 Performance.
