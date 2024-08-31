@@ -32,9 +32,9 @@ Income Tracking.
 - Points: 2.
 - Income tracking requires a form and database.
 
-Expense Tracking.
-- As a user, I want to add expenses so I can track my spending.
-- As a user, I want to categorize expenses so I know where money is going.
+Investment Tracking.
+- As a user, I want to add investments so I can track my spending.
+- As a user, I want to categorize investments so I know where money is going.
 - Points: 2.
 - Expense tracking requires a form and database.
 
