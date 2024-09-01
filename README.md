@@ -131,5 +131,15 @@ Database.
 
 ![image](https://github.com/user-attachments/assets/58fda103-1f6a-45a4-b2b1-f3710eb8a311)
 
+## Final Presentation 
+
+- As a new user, I want to create an account so I can start tracking my personal finances.
+- https://www.youtube.com/watch?v=RP3_qrwcTfg&feature=youtu.be
+- As a registered user, I want to log in to my account and access my personal finance information.
+- https://youtu.be/xeT007KVBP0
+- As a user, I want to add my sources of income to track earnings.
+- https://youtu.be/hj9XdBTKmjg
+- As a user, I want to categorize my sources of income to understand where money is coming from.
+- https://youtu.be/ULhk23PTdzI
 
 
