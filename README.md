@@ -141,5 +141,9 @@ Database.
 - https://youtu.be/hj9XdBTKmjg
 - As a user, I want to categorize my sources of income to understand where money is coming from.
 - https://youtu.be/ULhk23PTdzI
-
-
+- As a user, I want to create savings goals through investments for monthly expenses.
+- As a user, I want to track how many savings I have left.
+- https://youtu.be/PFMAo7D2Of4
+- As a user, I want to generate monthly financial reports detailing financial performance.
+- As a user, I want to see visualizations of different spending categories based on percentages.
+- https://youtu.be/yCBP0NrJadk
