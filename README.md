@@ -147,3 +147,7 @@ Database.
 - As a user, I want to generate monthly financial reports detailing financial performance.
 - As a user, I want to see visualizations of different spending categories based on percentages.
 - https://youtu.be/yCBP0NrJadk
+
+## Design Report
+
+[Final Design Report Budget Buddy.pdf](https://github.com/user-attachments/files/16831837/Final.Design.Report.Budget.Buddy.pdf)
