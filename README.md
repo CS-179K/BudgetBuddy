@@ -7,6 +7,33 @@ A financial tracker that allows the user to track and interact with their financ
 - Tristan Cai
 - Junyan Hou
 
+## Build
+- Install VSCode IDE or an IDE of your choice.
+- Install Node.js.
+- Create a folder, open the folder, and open a terminal on your IDE.
+- Clone the repository.
+
+## Installation
+- After cloning the repository, open a new terminal.
+- Run the command `cd backend` and then run `npm i`.
+- Open a new separate terminal.
+- Run the command `cd frontend` and then run `npm i`.
+- Ensure you have a .env file in the backend.
+- The .env file needs values of PORT=4000, MONGO_URI=your_uri, SECRET=your_secret_key.
+- Create a MongoDB cluster and get a connection string for your URI.
+- Run the command below to create a secret key.
+- `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+- You have successfully installed the dependencies and the app is ready to start.
+
+## Usage
+- After installing the dependencies, remain on the frontend and backend.
+- Run the command `node server.js` while in the directory backend.
+- You should be on PORT 4000 and connected to MongoDB successfully.
+- Run the command `npm start` in the directory frontend.
+- The webpage should successfully have all correct dependencies and you should be running on http://localhost:3000/
+- From here, sign up and create an account. By signing up, you have access to all protected routes.
+- You can now use the Budget Buddy web application.
+
 ## Functional Features
 - User registration.
 - User login and logout.
