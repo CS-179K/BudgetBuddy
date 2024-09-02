@@ -174,6 +174,13 @@ Database.
 - As a user, I want to generate monthly financial reports detailing financial performance.
 - As a user, I want to see visualizations of different spending categories based on percentages.
 - https://youtu.be/yCBP0NrJadk
+- As a user, I want to add investments so I can track my spending.
+- As a user, I want to categorize investments so I know where money is going.
+- https://www.youtube.com/watch?v=IR8DOv9Vb1s
+- As a user, I want to set a monthly budget for different categories of spending.
+- As a user, I want to receive an alert when investments reaches a threshold of 75% of my budgets.
+- https://www.youtube.com/watch?v=3Ls6V3O3AVs
+
 
 ## Design Report
 
