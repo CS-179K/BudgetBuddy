@@ -130,6 +130,7 @@ const InvestmentForm = () => {
 
             <label>Is this a recurring payment?</label>
             <input
+                style = {{width: '30px', height: '30px'}}
                 type="checkbox"
                 onChange={(e) => setIsRecurring(e.target.checked)}
                 checked={isRecurring}
@@ -161,6 +162,7 @@ const InvestmentForm = () => {
 
             <label>Investment Description:</label>
             <textarea
+                type = "text"
                 onChange={(e) => setDescription(e.target.value)}
                 value={investmentDescription}
                 className={emptyFields.includes('investmentDescription') ? 'error' : 'description'}
