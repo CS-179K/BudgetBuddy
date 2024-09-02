@@ -184,7 +184,10 @@ Database.
 - https://youtu.be/iRzTGF1zqC4
 - As a user, I want to compare my income and transactions with my ideal spending goals.
 - https://youtu.be/9k9QAfhzQFI
-
+- As a user, I want to import my bank statement to track real transactions.
+- https://youtu.be/iRzTGF1zqC4
+- As a user, I want to compare my income and transactions with my ideal spending goals.
+- https://youtu.be/9k9QAfhzQFI
 
 ## Design Report
 
