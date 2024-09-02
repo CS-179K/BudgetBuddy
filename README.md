@@ -180,6 +180,10 @@ Database.
 - As a user, I want to set a monthly budget for different categories of spending.
 - As a user, I want to receive an alert when investments reaches a threshold of 75% of my budgets.
 - https://www.youtube.com/watch?v=3Ls6V3O3AVs
+- As a user, I want to import my bank statements to track real transactions.
+- https://youtu.be/iRzTGF1zqC4
+- As a user, I want to compare my income and transactions with my ideal spending goals.
+- https://youtu.be/9k9QAfhzQFI
 
 
 ## Design Report
